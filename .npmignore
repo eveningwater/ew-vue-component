@@ -1,17 +1,23 @@
-# Source files
+# Source files (only dist should be published)
 src/
+tests/
 
-# Config files
+# Configuration files
 tsconfig.json
 rollup.config.js
+vitest.config.ts
+.gitignore
 
 # Development files
 *.tsx
 *.ts
 !dist/**/*.d.ts
 
-# Dependencies
+# Dependencies and lock files
 node_modules/
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
 
 # Logs
 logs
@@ -19,18 +25,26 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
-# Coverage directory
+# Coverage and test files
 coverage/
+.nyc_output
 
-# IDE
+# Documentation (docs site, not package docs)
+docs/
+
+# Development analysis files
+vue-component-analysis.md
+
+# IDE files
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# OS
+# OS files
 .DS_Store
 .DS_Store?
 ._*
@@ -39,11 +53,12 @@ coverage/
 ehthumbs.db
 Thumbs.db
 
-# Git
+# Git files
 .git/
-.gitignore
 
-src/*
-pnpm-lock.yaml
+# CI/CD files
+.github/
 
-docs
+# Temporary files
+*.tmp
+*.temp
