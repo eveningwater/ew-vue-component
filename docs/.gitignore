@@ -4,6 +4,10 @@ node_modules/
 # Build output
 dist/
 
+# VitePress cache
+.vitepress/cache/
+.vitepress/dist/
+
 # Logs
 logs
 *.log
