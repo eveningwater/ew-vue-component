@@ -7,11 +7,13 @@ module.exports = {
     {
       file: 'dist/index.js',
       format: 'cjs',
-      exports: 'named'
+      exports: 'named',
+      sourcemap: true
     },
     {
       file: 'dist/index.esm.js',
-      format: 'es'
+      format: 'es',
+      sourcemap: true
     }
   ],
   plugins: [
