@@ -1,0 +1,274 @@
+/* 自定义样式 */
+
+/* Hero 区域美化 */
+.VPHomeHero {
+  background: var(--vp-gradient-1);
+  position: relative;
+  overflow: hidden;
+}
+
+.VPHomeHero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  pointer-events: none;
+}
+
+.VPHomeHero .container {
+  position: relative;
+  z-index: 1;
+}
+
+.VPHomeHero .main {
+  color: white;
+}
+
+.VPHomeHero .tagline {
+  font-size: 1.25rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+}
+
+.VPHomeHero .actions {
+  gap: 1rem;
+}
+
+.VPHomeHero .action {
+  border-radius: 0.75rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+}
+
+.VPHomeHero .action.primary {
+  background: white;
+  color: var(--vp-c-brand);
+}
+
+.VPHomeHero .action.primary:hover {
+  background: #f8f9fa;
+  transform: translateY(-2px);
+  box-shadow: var(--vp-shadow-2);
+}
+
+.VPHomeHero .action.secondary {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.VPHomeHero .action.secondary:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+/* 特性卡片 */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+.feature-card {
+  background: var(--vp-c-bg-elv);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: var(--vp-shadow-1);
+  border: 1px solid var(--vp-c-divider);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--vp-gradient-2);
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--vp-shadow-2);
+}
+
+.feature-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  background: var(--vp-gradient-2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.feature-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--vp-c-text-1);
+}
+
+.feature-description {
+  color: var(--vp-c-text-2);
+  line-height: 1.6;
+}
+
+/* 代码块美化 */
+.VPContent .content {
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.VPContent .content pre {
+  background: var(--vp-code-block-bg);
+  border-radius: 0.75rem;
+  border: 1px solid var(--vp-c-divider);
+  overflow: hidden;
+}
+
+.VPContent .content code {
+  background: rgba(102, 126, 234, 0.1);
+  color: var(--vp-c-brand);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+  font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+}
+
+/* 导航栏美化 */
+.VPNav {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.dark .VPNav {
+  background: rgba(15, 23, 42, 0.8);
+}
+
+.VPNav .content {
+  padding: 0 1.5rem;
+}
+
+.VPNav .content-body {
+  height: 64px;
+}
+
+/* 侧边栏美化 */
+.VPSidebar {
+  background: var(--vp-c-bg-soft);
+}
+
+.VPSidebar .content {
+  padding: 1rem 0;
+}
+
+.VPSidebar .group {
+  margin-bottom: 1rem;
+}
+
+.VPSidebar .group .title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--vp-c-text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  padding: 0 1.5rem;
+}
+
+.VPSidebar .group .items {
+  padding: 0;
+}
+
+.VPSidebar .group .item {
+  padding: 0.5rem 1.5rem;
+  margin: 0;
+  border-radius: 0;
+  transition: all 0.2s ease;
+}
+
+.VPSidebar .group .item:hover {
+  background: rgba(102, 126, 234, 0.1);
+  color: var(--vp-c-brand);
+}
+
+.VPSidebar .group .item.active {
+  background: var(--vp-c-brand);
+  color: white;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .VPHomeHero .tagline {
+    font-size: 1rem;
+  }
+  
+  .VPHomeHero .actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .VPHomeHero .action {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .features {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 动画效果 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.VPHomeHero .main {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.feature-card {
+  animation: fadeInUp 0.6s ease-out;
+  animation-delay: calc(var(--index, 0) * 0.1s);
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--vp-c-bg-soft);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--vp-c-divider);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--vp-c-text-3);
+} 

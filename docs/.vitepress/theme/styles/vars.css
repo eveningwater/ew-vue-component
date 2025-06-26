@@ -1,0 +1,85 @@
+:root {
+  /* 主色调 */
+  --vp-c-brand: #667eea;
+  --vp-c-brand-light: #7c8ff0;
+  --vp-c-brand-lighter: #9ba8f5;
+  --vp-c-brand-dark: #5a6fd8;
+  --vp-c-brand-darker: #4a5fc7;
+
+  /* 背景色 */
+  --vp-c-bg: #ffffff;
+  --vp-c-bg-alt: #f8fafc;
+  --vp-c-bg-elv: #ffffff;
+  --vp-c-bg-soft: #f8fafc;
+
+  /* 文字色 */
+  --vp-c-text-1: #213547;
+  --vp-c-text-2: #475569;
+  --vp-c-text-3: #64748b;
+  --vp-c-text-code: #476582;
+
+  /* 边框色 */
+  --vp-c-divider: #e2e8f0;
+  --vp-c-divider-light: #f1f5f9;
+
+  /* 特殊色 */
+  --vp-c-green: #10b981;
+  --vp-c-green-light: #34d399;
+  --vp-c-green-lighter: #6ee7b7;
+  --vp-c-green-dark: #059669;
+  --vp-c-green-darker: #047857;
+
+  /* 代码块 */
+  --vp-code-block-bg: #f6f8fa;
+  --vp-code-line-highlight-color: #eaeef2;
+  --vp-code-line-number-color: #8b949e;
+
+  /* 自定义变量 */
+  --vp-gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --vp-gradient-2: linear-gradient(45deg, #667eea 0%, #9ba8f5 100%);
+  --vp-shadow-1: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --vp-shadow-2: 0 8px 25px rgba(0, 0, 0, 0.1);
+  --vp-shadow-3: 0 20px 40px rgba(102, 126, 234, 0.1);
+}
+
+/* 暗色模式 */
+.dark {
+  --vp-c-bg: #0f172a;
+  --vp-c-bg-alt: #1e293b;
+  --vp-c-bg-elv: #1e293b;
+  --vp-c-bg-soft: #1e293b;
+
+  --vp-c-text-1: #f8fafc;
+  --vp-c-text-2: #e2e8f0;
+  --vp-c-text-3: #cbd5e1;
+  --vp-c-text-code: #c9d1d9;
+
+  --vp-c-divider: #334155;
+  --vp-c-divider-light: #475569;
+
+  --vp-code-block-bg: #161b22;
+  --vp-code-line-highlight-color: #30363d;
+  --vp-code-line-number-color: #8b949e;
+}
+
+/* 代码块字体和颜色优化 */
+.VPContent .content code,
+.VPContent .content pre {
+  font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+  font-size: 15px;
+}
+
+.VPContent .content pre {
+  background: var(--vp-code-block-bg) !important;
+  color: var(--vp-c-text-code) !important;
+}
+
+.dark .VPContent .content pre {
+  background: var(--vp-code-block-bg) !important;
+  color: var(--vp-c-text-code) !important;
+}
+
+.VPContent .content code {
+  color: var(--vp-c-text-code) !important;
+  background: none;
+} 
