@@ -1,6 +1,6 @@
 {
   "name": "ew-vue-component",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A powerful Vue 3 dynamic component wrapper",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
