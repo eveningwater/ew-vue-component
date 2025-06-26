@@ -24,7 +24,7 @@ export const installPlugin = (_app: App, plugin: Plugin) => {
 }
 
 // 插件卸载函数
-export const uninstallPlugin = (app: App, pluginName: string) => {
+export const uninstallPlugin = (_app: App, pluginName: string) => {
   const plugin = pluginManager.get(pluginName)
   if (plugin && plugin.uninstall) {
     plugin.uninstall({

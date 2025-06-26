@@ -1,4 +1,4 @@
-import type { Component, VNode, App } from 'vue'
+import type { Component, VNode } from 'vue'
 
 // 组件类型
 export type ComponentType = string | Component | ComponentObject | (() => Promise<Component>)

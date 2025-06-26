@@ -8,7 +8,7 @@ import {
   onMounted,
   onUnmounted
 } from "vue";
-import { isString, warn, log, createCache, createPluginManager, createPerformanceMonitor, handleComponentError, logPlugin, performancePlugin, errorPlugin } from "./utils";
+import { isString, warn, log, createCache, createPluginManager, createPerformanceMonitor, handleComponentError, logPlugin, performancePlugin, errorPlugin, isAsyncComponent } from "./utils";
 import type { VNode } from 'vue'
 import type { 
   EwVueComponentProps, 
@@ -21,7 +21,7 @@ import type {
 const globalCache = createCache({
   maxSize: 200,
   ttl: 300000, // 5分钟
-  onEvict: (key, value) => {
+  onEvict: (key: string) => {
     log(`缓存项已过期: ${key}`)
   }
 })
@@ -43,27 +43,6 @@ const globalPerformanceMonitor = createPerformanceMonitor({
   }
 })
 
-function resolveSlots(slots: any) {
-  // 只传递有内容的插槽
-  const resolved: Record<string, any> = {};
-  for (const key in slots) {
-    if (typeof slots[key] === 'function') {
-      resolved[key] = slots[key];
-    }
-  }
-  return resolved;
-}
-
-function getComponentProps(ctx: any) {
-  // 只传递除is以外的props
-  const props: Record<string, any> = {};
-  for (const key in ctx.$props) {
-    if (key !== 'is') {
-      props[key] = ctx.$props[key];
-    }
-  }
-  return props;
-}
 
 export default defineComponent({
   name: "EwVueComponent",
@@ -181,11 +160,7 @@ export default defineComponent({
 
 
 
-    // 检查是否是异步组件
-    const isAsyncComponent = (component: ComponentType): boolean => {
-      return typeof component === 'function' && 
-             (component.toString().includes('Promise') || component.toString().includes('import'))
-    }
+ 
 
     // 同步加载组件
     const loadComponentSync = (component: ComponentType) => {

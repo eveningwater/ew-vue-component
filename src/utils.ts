@@ -1,4 +1,4 @@
-import type { Component, VNode } from 'vue'
+import type { Component } from 'vue'
 import type { 
   ComponentObject, 
   CacheOptions, 
