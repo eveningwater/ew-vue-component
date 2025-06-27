@@ -47,7 +47,6 @@ cat > $TEMP_DIR/index.html << EOF
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EwVueComponent - 强大的 Vue 动态组件库</title>
-    <meta http-equiv="refresh" content="0; url=./docs/">
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -101,12 +100,6 @@ cat > $TEMP_DIR/index.html << EOF
             <a href="https://www.npmjs.com/package/ew-vue-component">📦 NPM</a>
         </div>
     </div>
-    <script>
-        // 3秒后自动跳转到文档
-        setTimeout(() => {
-            window.location.href = './docs/';
-        }, 3000);
-    </script>
 </body>
 </html>
 EOF
