@@ -4,7 +4,7 @@ export default defineConfig({
   title: 'EwVueComponent',
   description: 'A powerful Vue 3 dynamic component wrapper',
   lang: 'zh-CN',
-  base: '/ew-vue-component/',
+  base: '/ew-vue-component/docs/',
   
   // 多语言配置
   locales: {
