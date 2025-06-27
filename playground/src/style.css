@@ -1,0 +1,147 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  background-color: #f5f5f5;
+}
+
+#app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.header p {
+  margin: 0.5rem 0 0 0;
+  opacity: 0.9;
+  font-size: 0.9rem;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 280px;
+  background: white;
+  border-right: 1px solid #e1e4e8;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 1rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e1e4e8;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.examples-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.example-item {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f3f4;
+  transition: background-color 0.2s;
+}
+
+.example-item:hover {
+  background-color: #f8f9fa;
+}
+
+.example-item.active {
+  background-color: #e3f2fd;
+  border-left: 3px solid #2196f3;
+}
+
+.example-title {
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 0.25rem;
+  color: #333;
+}
+
+.example-description {
+  font-size: 0.75rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+.repl-container {
+  flex: 1;
+  position: relative;
+}
+
+/* Vue REPL 样式调整 */
+.vue-repl {
+  height: 100%;
+  border: none;
+}
+
+.vue-repl .tab-buttons {
+  background: #f8f9fa;
+  border-bottom: 1px solid #e1e4e8;
+}
+
+.vue-repl .file-selector {
+  background: #f8f9fa;
+}
+
+/* 自定义样式覆盖 */
+:global(.vue-repl .import-map-wrapper) {
+  border-top: 1px solid #e1e4e8;
+}
+
+:global(.vue-repl .editor-container) {
+  border-right: 1px solid #e1e4e8;
+}
+
+:global(.vue-repl .output-container) {
+  background: white;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.error {
+  padding: 1rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  color: #dc2626;
+  margin: 1rem;
+  font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+  font-size: 0.875rem;
+  white-space: pre-wrap;
+} 

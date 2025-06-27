@@ -18,8 +18,11 @@
     "docs:build": "cd docs && npm run build",
     "docs:preview": "cd docs && npm run preview",
     "docs:deploy": "npm run docs:build && gh-pages -d docs/.vitepress/dist",
+    "playground:dev": "cd playground && npm run dev",
+    "playground:build": "cd playground && npm run build",
     "deploy": "npm run docs:deploy",
-    "release":"npm publish"
+    "deploy:all": "bash deploy-all.sh",
+    "release": "npm publish"
   },
   "keywords": [
     "vue",
@@ -42,6 +45,7 @@
     "jsdom": "^24.0.0",
     "rollup": "^4.0.0",
     "rollup-plugin-dts": "^6.0.0",
+    "tslib": "^2.8.1",
     "typescript": "^5.0.0",
     "vitest": "^1.6.1",
     "vue": "^3.4.0"

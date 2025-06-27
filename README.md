@@ -4,6 +4,13 @@
 
 [English](./README.en.md) | 简体中文
 
+## 🎮 在线演练场
+
+体验 EwVueComponent 的强大功能：
+
+- 🌐 [在线演练场](https://eveningwater.github.io/ew-vue-component/) - 实时编写和测试代码
+- 📚 [详细文档](https://eveningwater.github.io/ew-vue-component/docs/) - 完整的 API 文档和使用指南
+
 [![npm version](https://badge.fury.io/js/ew-vue-component.svg)](https://badge.fury.io/js/ew-vue-component)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Vue 3](https://img.shields.io/badge/Vue-3.x-brightgreen.svg)](https://vuejs.org/)
