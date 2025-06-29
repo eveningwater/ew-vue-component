@@ -204,8 +204,8 @@ const renderComponent = (component: unknown) => {
 };
 ```
 
-## Related
+## 相关链接
 
-- [Component API](./component.md) - Main component documentation
-- [Plugin API](./plugin.md) - Plugin system documentation
-- [Advanced Features](../guide/advanced-features.md) - Advanced usage patterns 
+- [Component API](/en/api/component) - Main component documentation
+- [Plugin API](/en/api/plugin) - Plugin system documentation
+- [Advanced Features](/en/guide/advanced-features) - Advanced usage patterns 

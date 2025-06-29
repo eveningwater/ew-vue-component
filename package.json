@@ -31,8 +31,16 @@
     "dynamic",
     "wrapper"
   ],
-  "author": "",
+  "author": "eveningwater <854806732@qq.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eveningwater/ew-vue-component.git"
+  },
+  "homepage": "https://eveningwater.github.io/ew-vue-component/docs/",
+  "bugs": {
+    "url": "https://github.com/eveningwater/ew-vue-component/issues"
+  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",

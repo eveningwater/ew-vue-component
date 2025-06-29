@@ -427,7 +427,7 @@ For comprehensive documentation, examples, and guides, visit:
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md) for details.
+We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.en) for details.
 
 ### Development Setup
 

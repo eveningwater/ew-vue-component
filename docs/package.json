@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Documentation for EwVueComponent",
+  "author": "eveningwater <854806732@qq.com>",
+  "license": "MIT",
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",

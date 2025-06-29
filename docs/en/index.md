@@ -274,20 +274,20 @@ const customPlugin = {
 ## 📖 Documentation
 
 ### Guides
-- [Getting Started](./guide/index.md) - Basic usage and concepts
-- [Basic Usage](./guide/basic-usage.md) - Detailed usage examples
-- [Advanced Features](./guide/advanced-features.md) - Advanced patterns and techniques
-- [Best Practices](./guide/best-practices.md) - Recommended patterns and optimizations
+- [Getting Started](/en/guide/) - Basic usage and concepts
+- [Basic Usage](/en/guide/basic-usage) - Detailed usage examples
+- [Advanced Features](/en/guide/advanced-features) - Advanced patterns and techniques
+- [Best Practices](/en/guide/best-practices) - Recommended patterns and optimizations
 
 ### API Reference
-- [Component API](./api/component.md) - Complete component API reference
-- [Plugin API](./api/plugin.md) - Plugin development guide
-- [Utils API](./api/utils.md) - Utility functions and helpers
+- [Component API](/en/api/component) - Complete component API reference
+- [Plugin API](/en/api/plugin) - Plugin development guide
+- [Utils API](/en/api/utils) - Utility functions and helpers
 
 ### Examples
-- [Basic Examples](./examples/basic.md) - Simple usage examples
-- [Dynamic Examples](./examples/dynamic.md) - Complex dynamic scenarios
-- [Error Handling](./examples/error-handling.md) - Error handling patterns
+- [Basic Examples](/en/examples/basic) - Simple usage examples
+- [Dynamic Examples](/en/examples/dynamic) - Complex dynamic scenarios
+- [Error Handling](/en/examples/error-handling) - Error handling patterns
 
 ## 🌟 Use Cases
 
@@ -365,13 +365,13 @@ Switch between component variants:
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](https://github.com/your-org/ew-vue-component/blob/main/CONTRIBUTING.md) for details.
+We welcome contributions! Please see our [Contributing Guide](https://github.com/eveningwater/ew-vue-component/blob/main/CONTRIBUTING.md) for details.
 
 ### Development Setup
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/ew-vue-component.git
+git clone https://github.com/eveningwater/ew-vue-component.git
 
 # Install dependencies
 pnpm install
@@ -385,14 +385,14 @@ pnpm build
 
 ## 📄 License
 
-MIT License - see the [LICENSE](https://github.com/your-org/ew-vue-component/blob/main/LICENSE) file for details.
+MIT License - see the [LICENSE](https://github.com/eveningwater/ew-vue-component/blob/main/LICENSE) file for details.
 
 ## 💡 Support
 
-- 📖 [Documentation](https://ew-vue-component.dev)
-- 🐛 [Issue Tracker](https://github.com/your-org/ew-vue-component/issues)
-- 💬 [Discussions](https://github.com/your-org/ew-vue-component/discussions)
-- 📧 [Email Support](mailto:support@ew-vue-component.dev)
+- 📖 [Documentation](https://eveningwater.github.io/ew-vue-component/docs/)
+- 🐛 [Issue Tracker](https://github.com/eveningwater/ew-vue-component/issues)
+- 💬 [Discussions](https://github.com/eveningwater/ew-vue-component/discussions)
+- 📧 [Email Support](mailto:854806732@qq.com)
 
 ---
 
