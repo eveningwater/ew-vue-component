@@ -3,6 +3,7 @@ import {
   isString,
   warn,
   log,
+  error,
   isComponent,
   isAsyncComponent,
   isComponentObject,
@@ -34,17 +35,39 @@ describe('Utils', () => {
     })
 
     it('warn 应该输出警告信息', () => {
+      const originalEnv = process.env.NODE_ENV
+      process.env.NODE_ENV = 'development'
+      
       const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
       warn('test warning')
       expect(consoleSpy).toHaveBeenCalled()
       consoleSpy.mockRestore()
+      
+      process.env.NODE_ENV = originalEnv
     })
 
     it('log 应该输出日志信息', () => {
+      const originalEnv = process.env.NODE_ENV
+      process.env.NODE_ENV = 'development'
+      
       const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
       log('test log')
       expect(consoleSpy).toHaveBeenCalled()
       consoleSpy.mockRestore()
+      
+      process.env.NODE_ENV = originalEnv
+    })
+
+    it('error 应该输出错误信息', () => {
+      const originalEnv = process.env.NODE_ENV
+      process.env.NODE_ENV = 'development'
+      
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+      error('test error')
+      expect(consoleSpy).toHaveBeenCalled()
+      consoleSpy.mockRestore()
+      
+      process.env.NODE_ENV = originalEnv
     })
   })
 
@@ -236,6 +259,9 @@ describe('Utils', () => {
 
   describe('错误处理', () => {
     it('handleComponentError 应该处理错误', () => {
+      const originalEnv = process.env.NODE_ENV
+      process.env.NODE_ENV = 'development'
+      
       const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
       const error = new Error('Test error')
       
@@ -246,6 +272,8 @@ describe('Utils', () => {
 
       expect(consoleSpy).toHaveBeenCalled()
       consoleSpy.mockRestore()
+      
+      process.env.NODE_ENV = originalEnv
     })
   })
 

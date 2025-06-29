@@ -13,11 +13,20 @@ import type {
   ErrorHandlerOptions
 } from './types'
 
+// 环境检测函数
+export const isDevelopment = (): boolean => {
+  return process.env.NODE_ENV === 'development' || 
+         process.env.NODE_ENV === 'dev' ||
+         !process.env.NODE_ENV ||
+         (typeof window !== 'undefined' && (window as any).__VUE_DEVTOOLS_GLOBAL_HOOK__)
+}
+
 // 基础工具函数
 export const isString = (val: unknown): val is string =>
   typeof val === "string";
 
 export const warn = <T>(...msg: T[]) => {
+  if (!isDevelopment()) return;
   console.warn(
     '%c[EwVueComponent]',
     'background: linear-gradient(45deg, #667eea 0%, #764ba2 100%); color: white; padding: 4px 8px; border-radius: 6px; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);',
@@ -26,9 +35,19 @@ export const warn = <T>(...msg: T[]) => {
 };
 
 export const log = <T>(...msg: T[]) => {
+  if (!isDevelopment()) return;
   console.log(
     '%c[EwVueComponent]',
     'background: linear-gradient(45deg, #10b981 0%, #059669 100%); color: white; padding: 4px 8px; border-radius: 6px; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);',
+    ...msg
+  );
+};
+
+export const error = <T>(...msg: T[]) => {
+  if (!isDevelopment()) return;
+  console.error(
+    '%c[EwVueComponent]',
+    'background: linear-gradient(45deg, #ef4444 0%, #dc2626 100%); color: white; padding: 4px 8px; border-radius: 6px; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);',
     ...msg
   );
 };
@@ -303,34 +322,29 @@ export const createPerformanceMonitor = (options: PerformanceOptions = {}): Perf
 
 // 错误处理函数
 export const handleComponentError = (
-  error: Error,
+  err: Error,
   component: any,
   options: ErrorHandlerOptions = {}
 ) => {
   const { reportToServer = false, showUserMessage = true, retryCount = 0, maxRetries = 3 } = options
 
   // 记录错误
-  warn('Component error:', error.message)
+  warn('Component error:', err.message)
 
   // 上报到服务器
   if (reportToServer) {
     // 这里可以实现错误上报逻辑
-    console.error('Error reported to server:', {
-      error: error.message,
-      stack: error.stack,
-      component,
-      timestamp: new Date().toISOString()
-    })
+    error('Error reported to server:', err.message, err.stack, component, new Date().toISOString())
   }
 
   // 显示用户消息
-  if (showUserMessage) {
-    console.warn('组件加载失败，请稍后重试')
+  if (showUserMessage && isDevelopment()) {
+    warn('组件加载失败，请稍后重试')
   }
 
   // 重试逻辑
-  if (retryCount < maxRetries) {
-    console.log(`Retrying... (${retryCount + 1}/${maxRetries})`)
+  if (retryCount < maxRetries && isDevelopment()) {
+    log(`Retrying... (${retryCount + 1}/${maxRetries})`)
   }
 }
 
@@ -374,16 +388,11 @@ export const performancePlugin = createPlugin({
 
 export const errorPlugin = createPlugin({
   name: 'error-handler',
-  onError(error, context) {
+  onError(err, context) {
     // 记录错误到服务器
-    console.error('错误已上报:', {
-      error: error.message,
-      stack: error.stack,
-      component: context.component,
-      timestamp: new Date().toISOString()
-    })
+    error('错误已上报:', err.message, err.stack, context.component, new Date().toISOString())
     
     // 显示用户友好的错误信息
-    console.warn('组件加载失败，请稍后重试')
+    warn('组件加载失败，请稍后重试')
   }
 })

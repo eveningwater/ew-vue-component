@@ -337,6 +337,9 @@ describe('EwVueComponent', () => {
 
   describe('重试机制', () => {
     it('应该在错误时自动重试', async () => {
+      const originalEnv = process.env.NODE_ENV
+      process.env.NODE_ENV = 'development'
+      
       const consoleSpy = vi.spyOn(console, 'log')
       
       const wrapper = mount(EwVueComponent, {
@@ -348,7 +351,7 @@ describe('EwVueComponent', () => {
       await wrapper.vm.$nextTick()
       
       // 等待重试
-      await new Promise(resolve => setTimeout(resolve, 100))
+      await new Promise(resolve => setTimeout(resolve, 1200))
       
       // 检查是否有包含重试信息的日志调用
       const logCalls = consoleSpy.mock.calls
@@ -358,6 +361,7 @@ describe('EwVueComponent', () => {
       expect(hasRetryLog).toBe(true)
       
       consoleSpy.mockRestore()
+      process.env.NODE_ENV = originalEnv
     })
   })
 }) 

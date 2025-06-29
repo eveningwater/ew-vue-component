@@ -1,6 +1,6 @@
 import type { App } from 'vue'
 import type { Plugin, PluginOptions, PluginManager } from './types'
-import { createPluginManager, createPlugin } from './utils'
+import { createPluginManager, createPlugin, log, warn } from './utils'
 
 // 插件管理器实例
 const pluginManager = createPluginManager()
@@ -14,13 +14,13 @@ export const installPlugin = (_app: App, plugin: Plugin) => {
       component: null,
       data: {},
       utils: {
-        warn: console.warn,
-        log: console.log
+        warn,
+        log
       }
     })
   }
   
-  console.log(`插件 ${plugin.name} 已安装`)
+  log(`插件 ${plugin.name} 已安装`)
 }
 
 // 插件卸载函数
@@ -31,14 +31,14 @@ export const uninstallPlugin = (_app: App, pluginName: string) => {
       component: null,
       data: {},
       utils: {
-        warn: console.warn,
-        log: console.log
+        warn,
+        log
       }
     })
   }
   
   pluginManager.unregister(pluginName)
-  console.log(`插件 ${pluginName} 已卸载`)
+  log(`插件 ${pluginName} 已卸载`)
 }
 
 // 获取插件管理器

@@ -8,7 +8,7 @@ import {
   onMounted,
   onUnmounted
 } from "vue";
-import { isString, warn, log, createCache, createPluginManager, createPerformanceMonitor, handleComponentError, logPlugin, performancePlugin, errorPlugin, isAsyncComponent } from "./utils";
+import { isString, warn, log, error, createCache, createPluginManager, createPerformanceMonitor, handleComponentError, logPlugin, performancePlugin, errorPlugin, isAsyncComponent, isDevelopment } from "./utils";
 import type { VNode } from 'vue'
 import type { 
   EwVueComponentProps, 
@@ -89,15 +89,15 @@ export default defineComponent({
   setup(props: EwVueComponentProps, { emit, slots, attrs }) {
     const currentComponent = ref<Component | null>(null)
     const isLoading = ref(false)
-    const error = ref<Error | null>(null)
+    const errorState = ref<Error | null>(null)
     const retryCount = ref(0)
     const maxRetries = 3
 
     // 错误捕获
     onErrorCaptured((err) => {
-      console.error('Component error captured:', err)
+      error('Component error captured:', String(err))
       const errorObj = err instanceof Error ? err : new Error(String(err))
-      error.value = errorObj
+      errorState.value = errorObj
       retryCount.value++
 
       // 执行 onError 钩子
@@ -174,7 +174,7 @@ export default defineComponent({
         }
       }
 
-      error.value = null
+      errorState.value = null
 
       try {
         // 执行 beforeRender 钩子
@@ -219,7 +219,7 @@ export default defineComponent({
 
       } catch (err) {
         const errorObj = err instanceof Error ? err : new Error(String(err))
-        error.value = errorObj
+        errorState.value = errorObj
         retryCount.value++
 
         // 执行 onError 钩子
@@ -264,7 +264,7 @@ export default defineComponent({
       }
 
       isLoading.value = true
-      error.value = null
+      errorState.value = null
 
       try {
         // 执行 beforeRender 钩子
@@ -294,7 +294,7 @@ export default defineComponent({
 
       } catch (err) {
         const errorObj = err instanceof Error ? err : new Error(String(err))
-        error.value = errorObj
+        errorState.value = errorObj
         retryCount.value++
 
         // 执行 onError 钩子
@@ -343,10 +343,10 @@ export default defineComponent({
       }
 
       // 显示错误状态
-      if (error.value) {
+      if (errorState.value) {
         if (props.errorComponent) {
           return h(props.errorComponent as any, { 
-            error: error.value,
+            error: errorState.value,
             retry: () => loadComponent(props.is)
           }, slots)
         }

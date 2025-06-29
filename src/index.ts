@@ -15,6 +15,9 @@ export { plugin }
 // 类型定义
 export { types }
 
+// 直接导出常用工具函数
+export { isDevelopment, warn, log, error } from './utils'
+
 // 默认导出
 export default EwVueComponent
 
