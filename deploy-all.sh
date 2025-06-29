@@ -53,7 +53,7 @@ cat > $TEMP_DIR/index.html << EOF
     <meta property="og:description" content="一个强大而灵活的 Vue 3 组件包装器，支持安全的动态组件渲染、全面的错误处理、性能优化和插件系统。">
     <meta property="og:type" content="website">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧩</text></svg>">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
     <style>
         * {
             margin: 0;
@@ -372,6 +372,7 @@ import { EwVueComponent } from 'ew-vue-component'
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     <script>
         // 简单的交互效果
         document.addEventListener('DOMContentLoaded', function() {
@@ -393,6 +394,7 @@ import { EwVueComponent } from 'ew-vue-component'
                 observer.observe(feature);
             });
         });
+        hljs.highlightAll();
     </script>
 </body>
 </html> 
