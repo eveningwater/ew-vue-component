@@ -22,12 +22,12 @@
           <div class="loading-spinner"></div>
           <p>正在加载演练场...</p>
         </div>
-
+        
         <div v-else-if="error" class="error">
           <p>{{ error }}</p>
           <button @click="retryInit">重试</button>
         </div>
-
+        
         <Repl v-else-if="store" :key="replKey" :store="store" :editor="Monaco" :showCompileOutput="false"
           :showImportMap="false" :clearConsole="false" :ssr="false" />
       </main>
@@ -158,7 +158,7 @@ const switchExample = async (example) => {
     // 5. 触发预览更新
     await nextTick()
     replKey.value += 1
-
+    
   } catch (err) {
     error.value = `切换示例失败: ${err.message}`
   }
@@ -172,13 +172,13 @@ const initializeStore = async () => {
       runtimeDev: 'https://unpkg.com/vue@3/dist/vue.esm-browser.js',
       runtimeProd: 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js'
     })
-
+    
     // 创建 store
     const newStore = useStore({
       builtinImportMap,
       vueVersion
     })
-
+    
     // 设置自定义导入映射，使用支持模板编译的Vue
     if (newStore.setImportMap) {
       newStore.setImportMap({
@@ -190,10 +190,10 @@ const initializeStore = async () => {
         }
       })
     }
-
+    
     store.value = newStore
     loading.value = false
-
+    
     // 直接替换默认的src/App.vue文件内容为欢迎页面
     if (newStore.files['src/App.vue']) {
       newStore.files['src/App.vue'].code = `<template>
@@ -476,22 +476,22 @@ onMounted(async () => {
   .main-content {
     flex-direction: column;
   }
-
+  
   .sidebar {
     width: 100%;
     height: 200px;
   }
-
+  
   .examples-list {
     flex-direction: row;
     overflow-x: auto;
     padding: 8px;
   }
-
+  
   .example-item {
     min-width: 200px;
     margin-right: 8px;
     margin-bottom: 0;
   }
 }
-</style>
+</style> 

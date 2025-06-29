@@ -107,7 +107,7 @@ export default defineConfig({
 
   // 主题配置
   themeConfig: {
-    logo: '/ew-vue-component/docs/logo.svg',
+    logo: '/logo.svg',
     siteTitle: 'EwVueComponent',
     
     // 社交链接
@@ -129,7 +129,7 @@ export default defineConfig({
 
   // 头部配置
   head: [
-    ['link', { rel: 'icon', href: '/ew-vue-component/docs/favicon.ico' }],
+    ['link', { rel: 'icon', href: '/favicon.ico' }],
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1' }]
   ]
 }) 
