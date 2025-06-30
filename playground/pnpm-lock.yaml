@@ -12,8 +12,8 @@ importers:
         specifier: ^4.6.1
         version: 4.6.1
       ew-vue-component:
-        specifier: ^0.0.1
-        version: 0.0.1(vue@3.5.17)
+        specifier: ^0.0.2
+        version: 0.0.2(vue@3.5.17)
       path-browserify:
         specifier: ^1.0.1
         version: 1.0.1
@@ -389,8 +389,8 @@ packages:
   estree-walker@2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
 
-  ew-vue-component@0.0.1:
-    resolution: {integrity: sha512-JPMQocaSw2oXo/xEONl9iJTRQeD5urau1eXm3TPfHsDPkTYLrXwobNKfG1sBHg2CVToEymaFNOIRF1CJ7G1tpg==}
+  ew-vue-component@0.0.2:
+    resolution: {integrity: sha512-KisJjuALguF6YkV2eM/SxbfGHhjpkieBKpH9y/RIuG6/dD/6GEvWsF8Z/DFqXeADEu4LaDHqYlXDWiHOUWwm0g==}
     peerDependencies:
       vue: ^3.0.0
 
@@ -882,7 +882,7 @@ snapshots:
 
   estree-walker@2.0.2: {}
 
-  ew-vue-component@0.0.1(vue@3.5.17):
+  ew-vue-component@0.0.2(vue@3.5.17):
     dependencies:
       vue: 3.5.17
 
