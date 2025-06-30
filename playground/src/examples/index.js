@@ -53,8 +53,8 @@ const CounterComponent = markRaw({
 })
 
 const components = [
-  { name: 'Hello', ...HelloComponent },
-  { name: 'Counter', ...CounterComponent }
+  markRaw({ name: 'Hello', ...HelloComponent }),
+  markRaw({ name: 'Counter', ...CounterComponent })
 ]
 
 const currentComponent = ref(components[0])
