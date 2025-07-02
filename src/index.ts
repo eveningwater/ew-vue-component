@@ -27,4 +27,4 @@ export const install = (app: any) => {
 }
 
 // 版本信息
-export const version = '0.0.2'
+export const version = '0.0.2-beta.2'

@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@vue/repl": "^4.6.1",
-    "ew-vue-component": "^0.0.2",
     "path-browserify": "^1.0.1",
     "vue": "^3.5.17"
   },

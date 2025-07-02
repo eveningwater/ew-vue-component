@@ -352,37 +352,103 @@ export const handleComponentError = (
 export const logPlugin = createPlugin({
   name: 'log',
   beforeRender(component, props, context) {
-    context.utils.log(`开始渲染组件: ${component.name || component}`, {
+    const componentName = getComponentName(component)
+    context.utils.log(`开始渲染组件: ${componentName}`, {
       component,
       props: Object.keys(props)
     })
   },
   afterRender(component, props, context) {
-    context.utils.log(`组件渲染完成: ${component.name || component}`)
+    const componentName = getComponentName(component)
+    context.utils.log(`组件渲染完成: ${componentName}`)
   },
   onError(error, context) {
     context.utils.warn(`组件渲染错误: ${error.message}`)
   }
 })
 
+// 获取组件名称的辅助函数
+const getComponentName = (component: any): string => {
+  if (!component) return 'Unknown'
+  
+  // 如果是字符串，直接返回
+  if (typeof component === 'string') return component
+  
+  // 如果有 name 属性且不为空
+  if (component.name && component.name !== 'default') return component.name
+  
+  // 如果有 __name 属性（Vue SFC 编译后的名称）
+  if (component.__name) return component.__name
+  
+  // 如果有 displayName 属性（React风格的名称）
+  if (component.displayName) return component.displayName
+  
+  // 如果是函数，尝试获取函数名
+  if (typeof component === 'function') {
+    // 对于异步组件，尝试从函数字符串中提取文件名
+    const funcStr = component.toString()
+    const importMatch = funcStr.match(/import\(['"`]([^'"`]+)['"`]\)/)
+    if (importMatch) {
+      const path = importMatch[1]
+      const fileName = path.split('/').pop()?.replace(/\.(vue|js|ts)$/, '')
+      if (fileName) return fileName
+    }
+    
+    if (component.name && component.name !== 'anonymous') return component.name
+    return 'AsyncComponent'
+  }
+  
+  // 如果是对象，尝试获取构造函数名
+  if (typeof component === 'object') {
+    if (component.constructor && component.constructor.name && component.constructor.name !== 'Object') {
+      return component.constructor.name
+    }
+    return 'Component'
+  }
+  
+  return 'Unknown'
+}
+
 export const performancePlugin = createPlugin({
   name: 'performance',
   beforeRender(component, props, context) {
-    performance.mark(`render-start-${component.name || 'unknown'}`)
+    const componentName = getComponentName(component)
+    const markId = `render-${Date.now()}-${Math.random()}`
+    
+    // 保存标记ID到context中，确保afterRender能找到对应的标记
+    context.data.performanceMarkId = markId
+    context.data.componentName = componentName
+    
+    try {
+      performance.mark(`${markId}-start`)
+    } catch (err) {
+      // 如果performance.mark失败，静默处理
+    }
+    
     context.data.renderStartTime = performance.now()
   },
   afterRender(component, props, context) {
     const endTime = performance.now()
-    const duration = endTime - context.data.renderStartTime
+    const startTime = context.data.renderStartTime
+    const markId = context.data.performanceMarkId
+    const componentName = context.data.componentName || getComponentName(component)
     
-    performance.mark(`render-end-${component.name || 'unknown'}`)
-    performance.measure(
-      `render-${component.name || 'unknown'}`,
-      `render-start-${component.name || 'unknown'}`,
-      `render-end-${component.name || 'unknown'}`
-    )
-    
-    context.utils.log(`组件渲染耗时: ${duration.toFixed(2)}ms`)
+    if (startTime) {
+      const duration = endTime - startTime
+      
+      try {
+        performance.mark(`${markId}-end`)
+        performance.measure(
+          `render-${componentName}`,
+          `${markId}-start`,
+          `${markId}-end`
+        )
+      } catch (err) {
+        // 如果performance API失败，静默处理
+      }
+      
+      context.utils.log(`组件渲染耗时: ${duration.toFixed(2)}ms`)
+    }
   }
 })
 

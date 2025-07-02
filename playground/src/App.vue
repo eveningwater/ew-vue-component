@@ -28,7 +28,7 @@
           <button @click="retryInit">重试</button>
         </div>
         
-        <Repl v-else-if="store" :key="replKey" :store="store" :editor="Monaco" :showCompileOutput="false"
+        <Repl v-else-if="store" :store="store" :editor="Monaco" :showCompileOutput="false"
           :showImportMap="false" :clearConsole="false" :ssr="false" />
       </main>
     </div>
@@ -37,15 +37,15 @@
 
 <script setup>
 import { Repl, useStore, useVueImportMap, compileFile } from '@vue/repl'
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted, nextTick, onBeforeUnmount } from 'vue'
 import Monaco from '@vue/repl/monaco-editor'
 import { examples } from './examples/index.js'
+import welcome from './template/welcome.vue?raw';
 
 const loading = ref(true)
 const currentExample = ref(null)
 const error = ref('')
 const store = ref(null)
-const replKey = ref(0)
 
 // 替换或添加文件到store的函数（基于Element Plus playground的方法）
 const replaceOrAddFilesToStore = async (files, store) => {
@@ -84,10 +84,16 @@ const replaceOrAddFilesToStore = async (files, store) => {
   return newFileNames
 }
 
+// 防抖函数，避免频繁切换导致Monaco Editor错误
+let switchingExample = false
+
 const switchExample = async (example) => {
-  if (!store.value || !example || !example.files) {
+  if (!store.value || !example || !example.files || switchingExample || isDestroyed) {
     return
   }
+  
+  // 防止频繁切换
+  switchingExample = true
   
   try {
     currentExample.value = example
@@ -122,26 +128,7 @@ const switchExample = async (example) => {
     // 2. 添加新的示例文件
     const newFileNames = await replaceOrAddFilesToStore(validFiles, store.value)
     
-    // 3. 重新编译所有可见文件，确保预览正确更新
-    const allFiles = Object.entries(store.value.files)
-    const visibleFiles = allFiles.filter(([_, file]) => !file.hidden)
-    
-    // 清空之前的错误
-    store.value.errors = []
-    
-    // 编译所有可见文件
-    for (const [filename, file] of visibleFiles) {
-      try {
-        const errors = await compileFile(store.value, file)
-        if (errors && errors.length > 0) {
-          store.value.errors.push(...errors)
-        }
-      } catch (err) {
-        // 静默处理编译错误
-      }
-    }
-    
-    // 4. 设置新的主文件和活动文件
+    // 3. 设置新的主文件和活动文件
     if (newFileNames.length > 0) {
       const mainFile = newFileNames.find(name => name.includes('App.vue')) || newFileNames[0];
       
@@ -149,18 +136,54 @@ const switchExample = async (example) => {
       store.value.mainFile = mainFile
       
       try {
-        store.value.setActive(mainFile)
+        // 使用延迟设置活动文件，避免Monaco Editor冲突
+        setTimeout(() => {
+          if (!isDestroyed && store.value) {
+            try {
+              store.value.setActive(mainFile)
+            } catch (err) {
+              // 静默处理错误
+            }
+          }
+        }, 100)
       } catch (err) {
         // 静默处理错误
       }
     }
     
-    // 5. 触发预览更新
+    // 4. 延迟重新编译，避免频繁操作
     await nextTick()
-    replKey.value += 1
+    
+    // 清空之前的错误
+    store.value.errors = []
+    
+    // 编译所有可见文件
+    const allFiles = Object.entries(store.value.files)
+    const visibleFiles = allFiles.filter(([_, file]) => !file.hidden)
+    
+    for (const [filename, file] of visibleFiles) {
+      if (isDestroyed || !store.value) break
+      
+      try {
+        const errors = await compileFile(store.value, file)
+        if (errors && errors.length > 0 && store.value) {
+          store.value.errors.push(...errors)
+        }
+      } catch (err) {
+        // 静默处理编译错误
+      }
+    }
     
   } catch (err) {
-    error.value = `切换示例失败: ${err.message}`
+    // 忽略Monaco Editor的取消错误
+    if (!err.message || !err.message.includes('Canceled')) {
+      error.value = `切换示例失败: ${err.message}`
+    }
+  } finally {
+    // 延迟释放锁，防止过快的切换
+    setTimeout(() => {
+      switchingExample = false
+    }, 300)
   }
 }
 
@@ -186,7 +209,7 @@ const initializeStore = async () => {
         imports: {
           ...builtinImportMap.value.imports,
           'vue': 'https://unpkg.com/vue@3/dist/vue.esm-browser.js',
-          'ew-vue-component': 'https://unpkg.com/ew-vue-component@0.0.1/dist/index.esm.js'
+          'ew-vue-component': 'https://unpkg.com/ew-vue-component@0.0.2-beta.2/dist/index.esm.js'
         }
       })
     }
@@ -196,103 +219,7 @@ const initializeStore = async () => {
     
     // 直接替换默认的src/App.vue文件内容为欢迎页面
     if (newStore.files['src/App.vue']) {
-      newStore.files['src/App.vue'].code = `<template>
-  <div class="welcome">
-    <div class="logo">
-      <h1>🎯 EwVueComponent</h1>
-      <p class="subtitle">强大的Vue组件动态渲染库</p>
-    </div>
-    
-    <div class="features">
-      <div class="feature">
-        <h3>💡 智能渲染</h3>
-        <p>支持动态组件渲染和切换</p>
-      </div>
-      <div class="feature">
-        <h3>🔧 易于使用</h3>
-        <p>简单的API，开箱即用</p>
-      </div>
-      <div class="feature">
-        <h3>⚡ 高性能</h3>
-        <p>优化的渲染性能</p>
-      </div>
-    </div>
-    
-    <div class="get-started">
-      <p>👈 从左侧选择示例开始体验</p>
-    </div>
-  </div>
-</template>
-
-<style scoped>
-.welcome {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 40px;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  text-align: center;
-}
-
-.logo h1 {
-  color: #42b883;
-  font-size: 3em;
-  margin: 0 0 10px 0;
-  font-weight: 700;
-}
-
-.subtitle {
-  color: #666;
-  font-size: 1.2em;
-  margin-bottom: 40px;
-}
-
-.features {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 30px;
-  max-width: 400px;
-  margin-bottom: 40px;
-}
-
-.feature {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-}
-
-.feature:hover {
-  transform: translateY(-2px);
-}
-
-.feature h3 {
-  color: #2d3748;
-  margin: 0 0 10px 0;
-  font-size: 1.1em;
-}
-
-.feature p {
-  color: #666;
-  margin: 0;
-  line-height: 1.5;
-}
-
-.get-started {
-  background: #42b883;
-  color: white;
-  padding: 15px 30px;
-  border-radius: 8px;
-  font-weight: 600;
-}
-
-.get-started p {
-  margin: 0;
-}
-</style>`
+      newStore.files['src/App.vue'].code = welcome;
       
       // 手动编译文件以确保更新生效
       try {
@@ -302,9 +229,8 @@ const initializeStore = async () => {
       }
     }
 
-    // 强制刷新预览
+    // 等待编译完成
     await nextTick()
-    replKey.value += 1
     
   } catch (err) {
     error.value = `初始化失败: ${err.message}`
@@ -318,9 +244,47 @@ const retryInit = async () => {
   await initializeStore()
 }
 
+// 清理函数
+let isDestroyed = false
+let originalConsoleError = null
+
 onMounted(async () => {
+  // 捕获Monaco Editor的全局错误
+  originalConsoleError = console.error
+  console.error = (...args) => {
+    const message = args.join(' ')
+    // 忽略Monaco Editor的取消和清理相关错误
+    if (message.includes('Canceled') || 
+        message.includes('WordHighlighter') || 
+        message.includes('DisposableStore') ||
+        message.includes('Delayer')) {
+      return
+    }
+    originalConsoleError.apply(console, args)
+  }
+  
   await nextTick()
   await initializeStore()
+})
+
+onBeforeUnmount(() => {
+  isDestroyed = true
+  switchingExample = false
+  
+  // 恢复原始的console.error
+  if (originalConsoleError) {
+    console.error = originalConsoleError
+  }
+  
+  // 清理store
+  if (store.value) {
+    try {
+      // 静默清理，避免错误
+      store.value = null
+    } catch (err) {
+      // 忽略清理错误
+    }
+  }
 })
 </script>
 

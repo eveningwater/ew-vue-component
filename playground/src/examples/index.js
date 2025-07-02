@@ -1,8 +1,45 @@
+import example1Raw from '../template/examples/example-1.vue?raw';
+import example2Raw from '../template/examples/example-2.vue?raw';
+import example3Raw from '../template/examples/example-3.vue?raw';
+
 export const examples = [
   {
-    id: 'basic',
-    title: '基础用法',
-    description: '展示 EwVueComponent 的基本使用方式',
+    id: 'example-1',
+    title: '示例1',
+    description: '基础组件使用',
+    files: [
+      {
+        name: 'App.vue',
+        content: example1Raw
+      }
+    ]
+  },
+  {
+    id: 'example-2',
+    title: '示例2',
+    description: '插件系统',
+    files: [
+      {
+        name: 'App.vue',
+        content: example2Raw
+      }
+    ]
+  },
+  {
+    id: 'example-3',
+    title: '示例3 - 异步组件渲染',
+    description: '演示EwVueComponent的异步组件加载功能，包含用户资料、设置、仪表板三个完整的内联组件示例',
+    files: [
+      {
+        name: 'App.vue',
+        content: example3Raw
+      }
+    ]
+  },
+  {
+    id: 'example-4',
+    title: '示例4',
+    description: '动态渲染组件',
     files: [
       {
         name: 'App.vue',
@@ -30,7 +67,7 @@ export const examples = [
 
 <script setup>
 import { ref, markRaw } from 'vue'
-import EwVueComponent from 'ew-vue-component'
+import { EwVueComponent } from 'ew-vue-component'
 
 const HelloComponent = markRaw({
   template: '<div class="hello">Hello World! 🌍</div>'
@@ -130,9 +167,9 @@ const currentComponent = ref(components[0])
     ]
   },
   {
-    id: 'dynamic',
-    title: '动态组件切换',
-    description: '演示如何动态切换不同的组件',
+    id: 'example-5',
+    title: '示例5',
+    description: '动态切换不同的组件',
     files: [
       {
         name: 'App.vue',
@@ -161,7 +198,7 @@ const currentComponent = ref(components[0])
 
 <script setup>
 import { ref, reactive, markRaw } from 'vue'
-import EwVueComponent from 'ew-vue-component'
+import { EwVueComponent } from 'ew-vue-component'
 
 const FormComponent = markRaw({
   template: \`
@@ -334,4 +371,4 @@ const updateComponent = () => {
       }
     ]
   }
-]
+];

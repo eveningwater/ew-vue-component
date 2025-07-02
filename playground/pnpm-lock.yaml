@@ -11,9 +11,6 @@ importers:
       '@vue/repl':
         specifier: ^4.6.1
         version: 4.6.1
-      ew-vue-component:
-        specifier: ^0.0.2
-        version: 0.0.2(vue@3.5.17)
       path-browserify:
         specifier: ^1.0.1
         version: 1.0.1
@@ -388,11 +385,6 @@ packages:
 
   estree-walker@2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
-
-  ew-vue-component@0.0.2:
-    resolution: {integrity: sha512-KisJjuALguF6YkV2eM/SxbfGHhjpkieBKpH9y/RIuG6/dD/6GEvWsF8Z/DFqXeADEu4LaDHqYlXDWiHOUWwm0g==}
-    peerDependencies:
-      vue: ^3.0.0
 
   fast-glob@3.3.3:
     resolution: {integrity: sha512-7MptL8U0cqcFdzIzwOTHoilX9x5BrNqye7Z/LuC7kCMRio1EMSyqRK3BEAUD7sXRq4iT4AzTVuZdhgQ2TCvYLg==}
@@ -881,10 +873,6 @@ snapshots:
   escape-string-regexp@1.0.5: {}
 
   estree-walker@2.0.2: {}
-
-  ew-vue-component@0.0.2(vue@3.5.17):
-    dependencies:
-      vue: 3.5.17
 
   fast-glob@3.3.3:
     dependencies:
