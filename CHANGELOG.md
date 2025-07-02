@@ -16,6 +16,65 @@
 - 📚 **性能基准测试**：建立性能监控和回归测试
 - 🌐 **国际化支持**：多语言错误消息和文档
 
+## [0.0.2-beta.5] - 2025-01-02
+
+### 💅 样式系统集成版本 / Style System Integration Release
+
+这个版本专注于为组件库添加完整的样式系统，提供开箱即用的美观UI体验。
+
+### 新增 / Added
+- 🎨 **独立样式包**：新增 `ew-vue-component.css` 单独构建的样式文件
+- 🖌️ **默认UI样式**：为以下元素提供现代化设计：
+  - `.ew-vue-component-loading`：动态加载状态界面，带有动画效果
+  - `.ew-vue-component-fallback`：优雅的错误回退显示
+  - `.ew-vue-component-error`：错误状态的可视化界面  
+  - `.retry-btn`：具有悬停效果的交互重试按钮
+- 🌓 **深色模式支持**：自动适配系统深色模式 (`prefers-color-scheme: dark`)
+- ♿ **无障碍设计**：支持高对比度模式 (`prefers-contrast: high`)
+- 📱 **响应式设计**：移动设备友好的自适应布局
+- ⚡ **动画优化**：尊重用户的动画偏好 (`prefers-reduced-motion`)
+- 🎯 **样式演示**：在 playground 中新增样式演示页面
+
+### 改进 / Changed
+- 🔧 **构建配置升级**：Rollup 配置支持CSS和JavaScript并行构建
+- 📦 **PostCSS 集成**：添加 autoprefixer 和 cssnano 优化
+- 📚 **文档完善**：README 中新增样式导入和使用说明
+- 🎮 **演练场增强**：playground 集成样式文件，支持在线预览效果
+
+### 样式特性 / Style Features
+- 🎨 **现代设计语言**：渐变背景、柔和阴影、圆角边框
+- 🌈 **渐变动画效果**：加载状态带有流光动画
+- 🎯 **交互反馈**：按钮悬停和点击状态的视觉反馈
+- 🔧 **高度可定制**：使用 CSS 自定义属性，易于主题定制
+- 📐 **尺寸适配**：支持不同尺寸的响应式显示
+
+### 技术实现 / Technical Implementation
+- **CSS 构建**：使用 `rollup-plugin-postcss` 独立构建
+- **样式压缩**：自动压缩和优化，包含 source map
+- **兼容性**：自动添加浏览器前缀
+- **模块化**：样式文件可独立引入，不影响现有项目样式
+
+### 使用方法 / Usage
+```javascript
+// 导入样式文件
+import 'ew-vue-component/dist/ew-vue-component.css';
+```
+
+### 📦 构建输出 / Build Output
+- `dist/ew-vue-component.css` - 压缩的样式文件 (3.5KB)
+- `dist/ew-vue-component.css.map` - source map 文件
+
+### 🧪 测试 / Tests
+- ✅ **构建验证**：所有样式正确构建和压缩
+- 🎮 **演练场测试**：playground 中样式正常显示
+- 📱 **响应式测试**：不同屏幕尺寸下样式表现良好
+
+### 📋 设计原则 / Design Principles
+- **非侵入性**：样式只影响组件库内部元素
+- **可覆盖性**：所有样式可通过 CSS 覆盖自定义
+- **性能优先**：CSS 文件经过优化，加载快速
+- **向后兼容**：不影响现有项目的使用方式
+
 ## [0.0.2-beta.1] - 2025-01-02
 
 ### 🔍 代码审查优化版本 / Code Review Optimization Release

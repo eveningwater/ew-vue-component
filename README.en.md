@@ -31,6 +31,35 @@ yarn add ew-vue-component
 pnpm add ew-vue-component
 ```
 
+### 💅 Importing Styles
+
+For the best visual experience, import the component's stylesheet in your project:
+
+```javascript
+// Import in main.js or main.ts
+import 'ew-vue-component/dist/ew-vue-component.css';
+```
+
+Or import in your CSS file:
+
+```css
+@import 'ew-vue-component/dist/ew-vue-component.css';
+```
+
+The stylesheet includes beautiful styles for the following default elements:
+
+- **Loading State** (`.ew-vue-component-loading`): Modern loading interface with animation effects
+- **Fallback Component** (`.ew-vue-component-fallback`): Elegant error fallback display
+- **Error State** (`.ew-vue-component-error`): Visual interface for error states
+- **Retry Button** (`.retry-btn`): Interactive button with hover effects
+
+Style Features:
+- 🎨 Modern design language with gradient and shadow effects
+- 🌓 Automatic dark mode adaptation (`prefers-color-scheme: dark`)
+- ♿ High contrast mode support (`prefers-contrast: high`)
+- 📱 Responsive design, mobile-friendly
+- ⚡ Respects user animation preferences (`prefers-reduced-motion`)
+
 ## 🎯 Quick Start
 
 ### Global Registration

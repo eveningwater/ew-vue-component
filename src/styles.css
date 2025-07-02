@@ -1,0 +1,216 @@
+/* EwVueComponent 样式 */
+
+/* 加载状态样式 */
+.ew-vue-component-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+  padding: 2rem;
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.ew-vue-component-loading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+  animation: loading-shimmer 2s infinite;
+}
+
+@keyframes loading-shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* 回退组件样式 */
+.ew-vue-component-fallback {
+  padding: 1.5rem;
+  background: #f9fafb;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  color: #374151;
+  font-size: 0.875rem;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* 错误状态样式 */
+.ew-vue-component-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  padding: 2rem;
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border: 1px solid #f87171;
+  border-radius: 0.75rem;
+  color: #dc2626;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 3px 0 rgba(220, 38, 38, 0.1), 0 1px 2px 0 rgba(220, 38, 38, 0.06);
+}
+
+.ew-vue-component-error:hover {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  border-color: #ef4444;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.1), 0 2px 4px -1px rgba(220, 38, 38, 0.06);
+}
+
+.ew-vue-component-error > div:first-child {
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+/* 重试按钮样式 */
+.ew-vue-component-retry-btn {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  border: none;
+  padding: 0.625rem 1.25rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 3px 0 rgba(59, 130, 246, 0.2), 0 1px 2px 0 rgba(59, 130, 246, 0.12);
+  min-width: 80px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+}
+
+.ew-vue-component-retry-btn:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2), 0 2px 4px -1px rgba(59, 130, 246, 0.12);
+}
+
+.ew-vue-component-retry-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px 0 rgba(59, 130, 246, 0.2);
+}
+
+.ew-vue-component-retry-btn:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: #3b82f6;
+  ring-offset: 2px;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.ew-vue-component-retry-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* 重试按钮图标（可选） */
+.ew-vue-component-retry-btn::before {
+  content: '⟲';
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* 响应式设计 */
+@media (max-width: 640px) {
+  .ew-vue-component-loading,
+  .ew-vue-component-fallback,
+  .ew-vue-component-error {
+    padding: 1rem;
+    min-height: 80px;
+  }
+
+  .ew-vue-component-retry-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+  .ew-vue-component-loading {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    border-color: #374151;
+    color: #d1d5db;
+  }
+
+  .ew-vue-component-loading::before {
+    background: linear-gradient(90deg, transparent, #60a5fa, transparent);
+  }
+
+  .ew-vue-component-fallback {
+    background: #1f2937;
+    border-color: #374151;
+    color: #d1d5db;
+  }
+
+  .ew-vue-component-error {
+    background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
+    border-color: #dc2626;
+    color: #fecaca;
+  }
+
+  .ew-vue-component-error:hover {
+    background: linear-gradient(135deg, #991b1b 0%, #b91c1c 100%);
+    border-color: #ef4444;
+  }
+}
+
+/* 高对比度模式支持 */
+@media (prefers-contrast: high) {
+  .ew-vue-component-loading,
+  .ew-vue-component-fallback,
+  .ew-vue-component-error {
+    border-width: 2px;
+  }
+
+  .ew-vue-component-retry-btn {
+    border: 2px solid transparent;
+  }
+
+  .ew-vue-component-retry-btn:focus {
+    border-color: #1d4ed8;
+  }
+}
+
+/* 减少动画（用户偏好） */
+@media (prefers-reduced-motion: reduce) {
+  .ew-vue-component-loading::before {
+    animation: none;
+  }
+
+  .ew-vue-component-error,
+  .ew-vue-component-retry-btn {
+    transition: none;
+  }
+
+  .ew-vue-component-error:hover,
+  .ew-vue-component-retry-btn:hover {
+    transform: none;
+  }
+} 

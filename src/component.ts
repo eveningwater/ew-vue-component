@@ -343,7 +343,7 @@ export default defineComponent({
           onClick: () => loadComponent(props.is)
         }, [
           h('div', '组件加载失败'),
-          h('button', { class: 'retry-btn' }, '重试')
+          h('button', { class: 'ew-vue-component-retry-btn' }, '重试')
         ])
       }
 
