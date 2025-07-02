@@ -43,6 +43,15 @@ const globalPerformanceMonitor = createPerformanceMonitor({
   }
 })
 
+// 全局资源清理方法
+export const destroyGlobalResources = () => {
+  globalCache.clear()
+  globalPerformanceMonitor.clear()
+  // 注意：globalPluginManager 不需要清理，因为插件可能在其他地方使用
+}
+
+// 检查是否支持 WeakRef 来优化内存管理
+const supportsWeakRef = typeof (globalThis as any).WeakRef !== 'undefined'
 
 export default defineComponent({
   name: "EwVueComponent",
@@ -158,32 +167,93 @@ export default defineComponent({
       })
     }
 
-    // 同步加载组件
-    const loadComponentSync = (component: ComponentType) => {
-      if (!component) return
-
-      const cacheKey = props.cacheKey || (isString(component) ? component : JSON.stringify(component))
-      
+    // 公共的组件加载前置处理
+    const beforeLoadComponent = (component: ComponentType, cacheKey: string) => {
       // 检查缓存
       if (props.cache) {
         const cached = localCache.get(cacheKey) || globalCache.get(cacheKey)
         if (cached) {
           log(`从缓存加载组件: ${cacheKey}`)
           currentComponent.value = cached
-          return
+          return true // 表示从缓存加载成功
         }
       }
 
       errorState.value = null
+      
+      // 执行 beforeRender 钩子
+      pluginContext.component = component
+      executePlugins('beforeRender', component, attrs, pluginContext)
+
+      // 开始性能监控
+      globalPerformanceMonitor.start(`load-${cacheKey}`)
+      
+      return false // 表示需要继续加载
+    }
+
+    // 公共的组件加载后置处理
+    const afterLoadComponent = (component: any, resolvedComponent: Component, cacheKey: string) => {
+      // 结束性能监控
+      globalPerformanceMonitor.end(`load-${cacheKey}`)
+
+      // 缓存组件
+      if (props.cache) {
+        localCache.set(cacheKey, resolvedComponent)
+        globalCache.set(cacheKey, resolvedComponent)
+      }
+
+      currentComponent.value = resolvedComponent
+      retryCount.value = 0
+
+      // 执行 afterRender 钩子
+      executePlugins('afterRender', resolvedComponent, attrs, pluginContext)
+    }
+
+    // 公共的错误处理逻辑
+    const handleLoadError = (err: any, component: ComponentType, isAsync: boolean = false) => {
+      const errorObj = err instanceof Error ? err : new Error(String(err))
+      errorState.value = errorObj
+      retryCount.value++
+
+      // 执行 onError 钩子
+      executePlugins('onError', errorObj, pluginContext)
+
+      // 处理错误
+      handleComponentError(errorObj, component, {
+        reportToServer: true,
+        showUserMessage: true,
+        retryCount: retryCount.value,
+        maxRetries
+      })
+
+      // 触发错误事件
+      emit('error', errorObj)
+
+      // 自动重试
+      if (retryCount.value < maxRetries) {
+        log(`自动重试加载组件 (${retryCount.value}/${maxRetries})`)
+        setTimeout(() => {
+          if (isAsync) {
+            loadComponentAsync(component)
+          } else {
+            loadComponentSync(component)
+          }
+        }, 1000 * retryCount.value) // 递增延迟
+      }
+    }
+
+    // 同步加载组件
+    const loadComponentSync = (component: ComponentType) => {
+      if (!component) return
+
+      const cacheKey = props.cacheKey || (isString(component) ? component : JSON.stringify(component))
+      
+      // 检查缓存和前置处理
+      if (beforeLoadComponent(component, cacheKey)) {
+        return // 从缓存加载成功，直接返回
+      }
 
       try {
-        // 执行 beforeRender 钩子
-        pluginContext.component = component
-        executePlugins('beforeRender', component, attrs, pluginContext)
-
-        // 开始性能监控
-        globalPerformanceMonitor.start(`load-${cacheKey}`)
-
         // 同步解析组件
         let resolvedComponent: Component
         if (isString(component)) {
@@ -202,47 +272,10 @@ export default defineComponent({
           throw new Error('无效的组件类型')
         }
         
-        // 结束性能监控
-        globalPerformanceMonitor.end(`load-${cacheKey}`)
-
-        // 缓存组件
-        if (props.cache) {
-          localCache.set(cacheKey, resolvedComponent)
-          globalCache.set(cacheKey, resolvedComponent)
-        }
-
-        currentComponent.value = resolvedComponent
-        retryCount.value = 0
-
-        // 执行 afterRender 钩子
-        executePlugins('afterRender', resolvedComponent, attrs, pluginContext)
+        afterLoadComponent(component, resolvedComponent, cacheKey)
 
       } catch (err) {
-        const errorObj = err instanceof Error ? err : new Error(String(err))
-        errorState.value = errorObj
-        retryCount.value++
-
-        // 执行 onError 钩子
-        executePlugins('onError', errorObj, pluginContext)
-
-        // 处理错误
-        handleComponentError(errorObj, component, {
-          reportToServer: true,
-          showUserMessage: true,
-          retryCount: retryCount.value,
-          maxRetries
-        })
-
-        // 触发错误事件
-        emit('error', errorObj)
-
-        // 自动重试
-        if (retryCount.value < maxRetries) {
-          log(`自动重试加载组件 (${retryCount.value}/${maxRetries})`)
-          setTimeout(() => {
-            loadComponentSync(component)
-          }, 1000 * retryCount.value) // 递增延迟
-        }
+        handleLoadError(err, component, false)
       }
     }
 
@@ -252,72 +285,22 @@ export default defineComponent({
 
       const cacheKey = props.cacheKey || (isString(component) ? component : JSON.stringify(component))
       
-      // 检查缓存
-      if (props.cache) {
-        const cached = localCache.get(cacheKey) || globalCache.get(cacheKey)
-        if (cached) {
-          log(`从缓存加载组件: ${cacheKey}`)
-          currentComponent.value = cached
-          isLoading.value = false
-          return
-        }
+      // 检查缓存和前置处理
+      if (beforeLoadComponent(component, cacheKey)) {
+        isLoading.value = false
+        return // 从缓存加载成功，直接返回
       }
 
       isLoading.value = true
-      errorState.value = null
 
       try {
-        // 执行 beforeRender 钩子
-        pluginContext.component = component
-        executePlugins('beforeRender', component, attrs, pluginContext)
-
-        // 开始性能监控
-        globalPerformanceMonitor.start(`load-${cacheKey}`)
-
         // 异步解析组件
         const result = await (component as () => Promise<Component>)()
         
-        // 结束性能监控
-        globalPerformanceMonitor.end(`load-${cacheKey}`)
-
-        // 缓存组件
-        if (props.cache) {
-          localCache.set(cacheKey, result)
-          globalCache.set(cacheKey, result)
-        }
-
-        currentComponent.value = result
-        retryCount.value = 0
-
-        // 执行 afterRender 钩子
-        executePlugins('afterRender', result, attrs, pluginContext)
+        afterLoadComponent(component, result, cacheKey)
 
       } catch (err) {
-        const errorObj = err instanceof Error ? err : new Error(String(err))
-        errorState.value = errorObj
-        retryCount.value++
-
-        // 执行 onError 钩子
-        executePlugins('onError', errorObj, pluginContext)
-
-        // 处理错误
-        handleComponentError(errorObj, component, {
-          reportToServer: true,
-          showUserMessage: true,
-          retryCount: retryCount.value,
-          maxRetries
-        })
-
-        // 触发错误事件
-        emit('error', errorObj)
-
-        // 自动重试
-        if (retryCount.value < maxRetries) {
-          log(`自动重试加载组件 (${retryCount.value}/${maxRetries})`)
-          setTimeout(() => {
-            loadComponentAsync(component)
-          }, 1000 * retryCount.value) // 递增延迟
-        }
+        handleLoadError(err, component, true)
       } finally {
         isLoading.value = false
       }
