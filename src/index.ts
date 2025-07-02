@@ -2,6 +2,8 @@ import EwVueComponent, { destroyGlobalResources } from './component'
 import * as utils from './utils'
 import * as plugin from './plugin'
 import type * as types from './types'
+// 从 package.json 导入版本号
+import packageInfo from '../package.json'
 
 // 主组件
 export { EwVueComponent }
@@ -55,14 +57,14 @@ export const install = (app: any, options?: any) => {
   }
 }
 
-// 版本信息
-export const version = '0.0.2-beta.3'
+// 版本信息（从 package.json 导入）
+export const version = packageInfo.version
 
 // 库信息
 export const libraryInfo = {
-  name: 'ew-vue-component',
-  version,
-  description: 'A powerful Vue 3 dynamic component wrapper',
-  author: 'eveningwater',
-  license: 'MIT'
+  name: packageInfo.name,
+  version: packageInfo.version,
+  description: packageInfo.description,
+  author: packageInfo.author,
+  license: packageInfo.license
 }

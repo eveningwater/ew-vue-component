@@ -1,4 +1,5 @@
 const typescript = require('@rollup/plugin-typescript');
+const json = require('@rollup/plugin-json');
 
 module.exports = {
   input: 'src/index.ts',
@@ -17,6 +18,7 @@ module.exports = {
     }
   ],
   plugins: [
+    json(),
     typescript({
       tsconfig: './tsconfig.json',
       declaration: true,
