@@ -51,7 +51,7 @@ export const destroyGlobalResources = () => {
 }
 
 // 检查是否支持 WeakRef 来优化内存管理
-const supportsWeakRef = typeof (globalThis as any).WeakRef !== 'undefined'
+export const supportsWeakRef = typeof (globalThis as any).WeakRef !== 'undefined'
 
 export default defineComponent({
   name: "EwVueComponent",
