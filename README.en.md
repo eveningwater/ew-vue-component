@@ -16,6 +16,7 @@ A powerful and flexible Vue 3 component wrapper that enables safe dynamic compon
 - **📦 TypeScript Support**: Full TypeScript support with comprehensive type definitions
 - **🎯 Slot Forwarding**: Complete slot forwarding including named and scoped slots
 - **🔧 Props/Events Forwarding**: Automatic forwarding of all props and events to target components
+- **🌍 Smart Environment Detection**: Vue-like development environment detection with build-time optimization
 - **🚫 Zero Dependencies**: Lightweight with no external dependencies
 
 ## 📦 Installation
@@ -59,6 +60,15 @@ Style Features:
 - ♿ High contrast mode support (`prefers-contrast: high`)
 - 📱 Responsive design, mobile-friendly
 - ⚡ Respects user animation preferences (`prefers-reduced-motion`)
+
+## 🌍 Environment Auto Switch
+
+Like Vue, EwVueComponent automatically switches between development and production builds based on `process.env.NODE_ENV`. You don't need to care about the environment, just import/require the main package and the bundler/Node will choose the optimal build.
+
+- CJS: `dist/ew-vue-component.cjs.js` (development) / `dist/ew-vue-component.cjs.prod.js` (production)
+- ESM: `dist/ew-vue-component.esm.js` (development) / `dist/ew-vue-component.esm.prod.js` (production)
+- Browser global: `dist/ew-vue-component.global.js` / `dist/ew-vue-component.global.prod.js`
+- Type declarations: `dist/ew-vue-component.d.ts`
 
 ## 🎯 Quick Start
 

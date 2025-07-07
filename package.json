@@ -1,13 +1,38 @@
 {
   "name": "ew-vue-component",
-  "version": "0.0.2-beta.5",
+  "version": "0.0.2-beta.6",
   "description": "A powerful Vue 3 dynamic component wrapper",
   "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
+  "module": "dist/ew-vue-component.esm.js",
+  "types": "dist/ew-vue-component.d.ts",
+  "unpkg": "dist/ew-vue-component.global.js",
+  "jsdelivr": "dist/ew-vue-component.global.js",
   "files": [
-    "dist"
+    "dist",
+    "index.js",
+    "index.mjs"
   ],
+  "exports": {
+    ".": {
+      "import": {
+        "node": "./index.mjs",
+        "production": "./dist/ew-vue-component.esm.prod.js",
+        "development": "./dist/ew-vue-component.esm.js",
+        "default": "./dist/ew-vue-component.esm.js"
+      },
+      "require": {
+        "node": {
+          "production": "./dist/ew-vue-component.cjs.prod.js",
+          "development": "./dist/ew-vue-component.cjs.js",
+          "default": "./index.js"
+        },
+        "default": "./index.js"
+      },
+      "types": "./dist/ew-vue-component.d.ts"
+    },
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "dev": "rollup -c -w",
     "build": "rollup -c",
@@ -45,6 +70,7 @@
     "@rollup/plugin-commonjs": "^25.0.0",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-replace": "^6.0.2",
     "@rollup/plugin-typescript": "^11.0.0",
     "@types/node": "^20.0.0",
     "@vitejs/plugin-vue": "^4.0.0",

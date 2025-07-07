@@ -25,6 +25,7 @@
 - **📦 TypeScript 支持**: 完整的 TypeScript 支持和类型定义
 - **🎯 插槽转发**: 完整的插槽转发，包括具名插槽和作用域插槽
 - **🔧 属性/事件转发**: 自动转发所有属性和事件到目标组件
+- **🌍 智能环境检测**: 类似 Vue 框架的开发环境检测，构建时优化
 - **🚫 零依赖**: 轻量级，无外部依赖
 
 ## 📦 安装
@@ -68,6 +69,15 @@ import 'ew-vue-component/dist/ew-vue-component.css';
 - ♿ 高对比度模式支持 (`prefers-contrast: high`)
 - 📱 响应式设计，移动设备友好
 - ⚡ 尊重用户的动画偏好 (`prefers-reduced-motion`)
+
+## 🌍 环境自动切换
+
+和 Vue 一样，EwVueComponent 会根据 `process.env.NODE_ENV` 自动切换开发/生产构建，开发者无需关心环境变量，直接 import/require 主包即可，打包器和 Node 会自动选择最优构建。
+
+- CJS: `dist/ew-vue-component.cjs.js`（开发）/ `dist/ew-vue-component.cjs.prod.js`（生产）
+- ESM: `dist/ew-vue-component.esm.js`（开发）/ `dist/ew-vue-component.esm.prod.js`（生产）
+- 浏览器全局: `dist/ew-vue-component.global.js` / `dist/ew-vue-component.global.prod.js`
+- 类型声明: `dist/ew-vue-component.d.ts`
 
 ## 🎯 快速开始
 

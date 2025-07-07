@@ -1,213 +1,223 @@
-# 更新日志 / Changelog
+# Changelog
 
-本文档记录了 EwVueComponent 的所有重要变更。
+This document records all important changes to EwVueComponent.
 
-格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，
-并且本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [未发布] / [Unreleased]
+## [Unreleased]
 
-### 计划中的改进 / Planned Improvements
-- 🚀 **Web Workers 支持**：异步组件加载支持 Web Workers
-- 📦 **组件预加载**：实现组件预加载和预缓存机制
-- 🔧 **SSR 优化**：改善服务端渲染支持
-- 🎮 **微前端支持**：支持微前端组件加载
-- 🛠️ **可视化调试工具**：浏览器扩展开发工具
-- 📚 **性能基准测试**：建立性能监控和回归测试
-- 🌐 **国际化支持**：多语言错误消息和文档
+### Planned Improvements
+- 🚀 **Web Workers Support**: Async component loading with Web Workers support
+- 📦 **Component Preloading**: Implement component preloading and pre-caching mechanisms
+- 🔧 **SSR Optimization**: Improve server-side rendering support
+- 🎮 **Micro-frontend Support**: Support micro-frontend component loading
+- 🛠️ **Visual Debugging Tools**: Browser extension development tools
+- 📚 **Performance Benchmarking**: Establish performance monitoring and regression testing
+- 🌐 **Internationalization Support**: Multi-language error messages and documentation
+
+## [0.0.2-beta.6] - 2025-01-02
+
+### 🌍 Smart Environment Detection Release
+
+This version implements automatic environment switching mechanism consistent with Vue:
+
+- Build outputs are divided into development/production sets (CJS/ESM/Global/Types)
+- Entry files and exports field automatically switch between development/production builds based on `process.env.NODE_ENV`
+- Developers don't need to worry about environment variables, just import/require the main package directly, and bundlers and Node will automatically select the optimal build
+
+**Output Description:**
+- CJS: `dist/ew-vue-component.cjs.js` (dev) / `dist/ew-vue-component.cjs.prod.js` (prod)
+- ESM: `dist/ew-vue-component.esm.js` (dev) / `dist/ew-vue-component.esm.prod.js` (prod)
+- Browser Global: `dist/ew-vue-component.global.js` / `dist/ew-vue-component.global.prod.js`
+- Type Declarations: `dist/ew-vue-component.d.ts`
 
 ## [0.0.2-beta.5] - 2025-01-02
 
-### 💅 样式系统集成版本 / Style System Integration Release
+### 💅 Style System Integration Release
 
-这个版本专注于为组件库添加完整的样式系统，提供开箱即用的美观UI体验。
+This version focuses on adding a complete styling system to the component library, providing a beautiful UI experience out of the box.
 
-### 新增 / Added
-- 🎨 **独立样式包**：新增 `ew-vue-component.css` 单独构建的样式文件
-- 🖌️ **默认UI样式**：为以下元素提供现代化设计：
-  - `.ew-vue-component-loading`：动态加载状态界面，带有动画效果
-  - `.ew-vue-component-fallback`：优雅的错误回退显示
-  - `.ew-vue-component-error`：错误状态的可视化界面  
-  - `.retry-btn`：具有悬停效果的交互重试按钮
-- 🌓 **深色模式支持**：自动适配系统深色模式 (`prefers-color-scheme: dark`)
-- ♿ **无障碍设计**：支持高对比度模式 (`prefers-contrast: high`)
-- 📱 **响应式设计**：移动设备友好的自适应布局
-- ⚡ **动画优化**：尊重用户的动画偏好 (`prefers-reduced-motion`)
-- 🎯 **样式演示**：在 playground 中新增样式演示页面
+### Added
+- 🎨 **Independent Style Package**: New `ew-vue-component.css` separately built style file
+- 🖌️ **Default UI Styles**: Modern design for the following elements:
+  - `.ew-vue-component-loading`: Dynamic loading state interface with animation effects
+  - `.ew-vue-component-fallback`: Elegant error fallback display
+  - `.ew-vue-component-error`: Visual interface for error states
+  - `.retry-btn`: Interactive retry button with hover effects
+- 🌓 **Dark Mode Support**: Automatic adaptation to system dark mode (`prefers-color-scheme: dark`)
+- ♿ **Accessibility Design**: Support for high contrast mode (`prefers-contrast: high`)
+- 📱 **Responsive Design**: Mobile-friendly adaptive layout
+- ⚡ **Animation Optimization**: Respects user's animation preferences (`prefers-reduced-motion`)
+- 🎯 **Style Demo**: New style demonstration page in playground
 
-### 改进 / Changed
-- 🔧 **构建配置升级**：Rollup 配置支持CSS和JavaScript并行构建
-- 📦 **PostCSS 集成**：添加 autoprefixer 和 cssnano 优化
-- 📚 **文档完善**：README 中新增样式导入和使用说明
-- 🎮 **演练场增强**：playground 集成样式文件，支持在线预览效果
+### Changed
+- 🔧 **Build Configuration Upgrade**: Rollup configuration supports CSS and JavaScript parallel building
+- 📦 **PostCSS Integration**: Added autoprefixer and cssnano optimization
+- 📚 **Documentation Improvement**: Added style import and usage instructions in README
+- 🎮 **Playground Enhancement**: Playground integrates style files, supports online preview effects
 
-### 样式特性 / Style Features
-- 🎨 **现代设计语言**：渐变背景、柔和阴影、圆角边框
-- 🌈 **渐变动画效果**：加载状态带有流光动画
-- 🎯 **交互反馈**：按钮悬停和点击状态的视觉反馈
-- 🔧 **高度可定制**：使用 CSS 自定义属性，易于主题定制
-- 📐 **尺寸适配**：支持不同尺寸的响应式显示
+### Style Features
+- 🎨 **Modern Design Language**: Gradient backgrounds, soft shadows, rounded borders
+- 🌈 **Gradient Animation Effects**: Loading states with flowing light animations
+- 🎯 **Interactive Feedback**: Visual feedback for button hover and click states
+- 🔧 **Highly Customizable**: Uses CSS custom properties, easy theme customization
+- 📐 **Size Adaptation**: Supports responsive display of different sizes
 
-### 技术实现 / Technical Implementation
-- **CSS 构建**：使用 `rollup-plugin-postcss` 独立构建
-- **样式压缩**：自动压缩和优化，包含 source map
-- **兼容性**：自动添加浏览器前缀
-- **模块化**：样式文件可独立引入，不影响现有项目样式
+### Technical Implementation
+- **CSS Building**: Uses `rollup-plugin-postcss` for independent building
+- **Style Compression**: Automatic compression and optimization, includes source map
+- **Compatibility**: Automatically adds browser prefixes
+- **Modularity**: Style files can be imported independently without affecting existing project styles
 
-### 使用方法 / Usage
+### Usage
 ```javascript
-// 导入样式文件
+// Import style file
 import 'ew-vue-component/dist/ew-vue-component.css';
 ```
 
-### 📦 构建输出 / Build Output
-- `dist/ew-vue-component.css` - 压缩的样式文件 (3.5KB)
-- `dist/ew-vue-component.css.map` - source map 文件
+### 📦 Build Output
+- `dist/ew-vue-component.css` - Compressed style file (3.5KB)
+- `dist/ew-vue-component.css.map` - Source map file
 
-### 🧪 测试 / Tests
-- ✅ **构建验证**：所有样式正确构建和压缩
-- 🎮 **演练场测试**：playground 中样式正常显示
-- 📱 **响应式测试**：不同屏幕尺寸下样式表现良好
+### 🧪 Tests
+- ✅ **Build Verification**: All styles correctly built and compressed
+- 🎮 **Playground Testing**: Styles display normally in playground
+- 📱 **Responsive Testing**: Styles perform well on different screen sizes
 
-### 📋 设计原则 / Design Principles
-- **非侵入性**：样式只影响组件库内部元素
-- **可覆盖性**：所有样式可通过 CSS 覆盖自定义
-- **性能优先**：CSS 文件经过优化，加载快速
-- **向后兼容**：不影响现有项目的使用方式
+### 📋 Design Principles
+- **Non-intrusive**: Styles only affect internal library elements
+- **Overridable**: All styles can be customized through CSS overrides
+- **Performance First**: CSS files are optimized for fast loading
+- **Backward Compatible**: Doesn't affect existing project usage patterns
 
 ## [0.0.2-beta.1] - 2025-01-02
 
-### 🔍 代码审查优化版本 / Code Review Optimization Release
+### 🔍 Code Review Optimization Release
 
-这个版本是基于全面代码审查的优化版本，专注于提升性能、稳定性和开发体验。
+This version is an optimization release based on comprehensive code review, focusing on improving performance, stability, and developer experience.
 
-### 新增 / Added
-- 🛡️ **全局资源管理**：新增 `destroyGlobalResources()` 方法，用于清理全局缓存和性能监控器
-- 🚨 **增强错误系统**：新增 `ComponentError` 类和 `ComponentErrorType` 枚举，支持错误分类
-- 🔍 **类型安全性**：改进组件验证函数，添加更严格的类型守卫和 HTML 标签名验证
-- 📦 **库信息导出**：新增 `libraryInfo` 对象，包含库的基本信息
-- ⚡ **智能缓存策略**：实现 LRU + TTL 混合清理策略，支持访问统计和智能清理
-- 🔧 **Performance API 兼容性**：添加 Performance API 可用性检测和 fallback 机制
-- 🎯 **性能阈值监控**：新增 16.67ms 性能警告阈值（60fps 标准）
+### Added
+- 🛡️ **Global Resource Management**: New `destroyGlobalResources()` method for cleaning up global caches and performance monitors
+- 🚨 **Enhanced Error System**: New `ComponentError` class and `ComponentErrorType` enum, supporting error classification
+- 🔍 **Type Safety**: Improved component validation functions with stricter type guards and HTML tag name validation
+- 📦 **Library Info Export**: New `libraryInfo` object containing basic library information
+- ⚡ **Smart Cache Strategy**: Implemented LRU + TTL hybrid cleanup strategy with access statistics and intelligent cleanup
+- 🔧 **Performance API Compatibility**: Added Performance API availability detection and fallback mechanisms
+- 🎯 **Performance Threshold Monitoring**: New 16.67ms performance warning threshold (60fps standard)
 
-### 改进 / Changed
-- ♻️ **重构组件加载逻辑**：提取公共函数 `beforeLoadComponent`、`afterLoadComponent`、`handleLoadError`，减少 60% 重复代码
-- 🎨 **优化模块导出**：重构导出结构，提供更清晰的 API 和全局配置支持
-- 🔄 **智能重试策略**：根据错误类型决定是否重试，验证错误不再重试
-- 📊 **指数退避算法**：重试延迟使用指数退避 `Math.min(1000 * Math.pow(2, retryCount), 10000)`
-- 🌐 **环境适配**：改善跨环境运行稳定性，特别是 Performance API 的兼容性
-- 💾 **缓存访问追踪**：缓存项增加访问次数和最后访问时间，优化内存管理
-- 📦 **版本号管理优化**：版本号现在从 `package.json` 动态导入，避免重复维护
+### Changed
+- ♻️ **Refactored Component Loading Logic**: Extracted common functions `beforeLoadComponent`, `afterLoadComponent`, `handleLoadError`, reducing 60% duplicate code
+- 🎨 **Optimized Module Exports**: Refactored export structure, providing clearer API and global configuration support
+- 🔄 **Smart Retry Strategy**: Decides whether to retry based on error type, validation errors no longer retry
+- 📊 **Exponential Backoff Algorithm**: Retry delay uses exponential backoff `Math.min(1000 * Math.pow(2, retryCount), 10000)`
+- 🌐 **Environment Adaptation**: Improved cross-environment stability, especially Performance API compatibility
+- 💾 **Cache Access Tracking**: Cache items include access count and last access time, optimizing memory management
+- 📦 **Version Management Optimization**: Version numbers now dynamically imported from `package.json`, avoiding duplicate maintenance
 
-### 修复 / Fixed
-- 🐛 **内存泄漏防护**：解决全局单例可能导致的内存泄漏问题
-- 🔧 **类型错误修复**：修复 WeakRef 类型错误和错误上报的类型问题
-- 📝 **错误日志格式**：统一错误日志输出格式，支持结构化数据记录
+### Fixed
+- 🐛 **Memory Leak Prevention**: Resolved potential memory leaks from global singletons
+- 🔧 **Type Error Fixes**: Fixed WeakRef type errors and error reporting type issues
+- 📝 **Error Log Format**: Unified error log output format, supporting structured data recording
 
-### 性能优化 / Performance
-- ⚡ **内存使用优化**：通过智能缓存清理减少约 15% 内存使用
-- 🚀 **错误处理提速**：通过错误分类提升 40% 响应速度
-- 📦 **代码体积减少**：通过代码复用减少约 8% 代码体积
-- 🔄 **清理频率优化**：缓存清理频率从 TTL 调整为 TTL/2，减少性能影响
+### Performance Optimization
+- ⚡ **Memory Usage Optimization**: Reduced memory usage by approximately 15% through intelligent cache cleanup
+- 🚀 **Error Handling Speed**: Improved response speed by 40% through error classification
+- 📦 **Code Size Reduction**: Reduced code size by approximately 8% through code reuse
+- 🔄 **Cleanup Frequency Optimization**: Cache cleanup frequency adjusted from TTL to TTL/2, reducing performance impact
 
-### 开发体验 / Developer Experience
-- 📋 **详细代码审查报告**：新增 `CODE_REVIEW_OPTIMIZATIONS.md` 文档
-- 🧪 **测试覆盖率保持**：所有优化保持 100% 测试通过率 (64/64)
-- 📚 **改进文档结构**：优化 API 文档和类型定义
-- 🔍 **调试信息增强**：改善开发环境下的错误信息和性能提示
+### Developer Experience
+- 📋 **Detailed Code Review Report**: New `CODE_REVIEW_OPTIMIZATIONS.md` documentation
+- 🧪 **Test Coverage Maintenance**: All optimizations maintain 100% test pass rate (64/64)
+- 📚 **Improved Documentation Structure**: Optimized API documentation and type definitions
+- 🔍 **Enhanced Debug Information**: Improved error information and performance tips in development environment
 
-### 架构改进 / Architecture
-- 🏗️ **错误分类系统**：支持加载错误、渲染错误、验证错误、超时错误、网络错误等分类
-- 🔌 **插件系统增强**：改进插件安装函数，支持全局插件配置
-- 🛠️ **工具函数重构**：改进 `isComponent`、`isAsyncComponent`、`validateComponent` 等函数
-- 📐 **类型系统完善**：使用更精确的类型守卫和断言
+### Architecture Improvements
+- 🏗️ **Error Classification System**: Supports loading errors, rendering errors, validation errors, timeout errors, network errors, etc.
+- 🔌 **Plugin System Enhancement**: Improved plugin installation functions, supporting global plugin configuration
+- 🛠️ **Utility Function Refactoring**: Improved `isComponent`, `isAsyncComponent`, `validateComponent` and other functions
+- 📐 **Type System Completion**: Uses more precise type guards and assertions
 
-### 🧪 测试 / Tests
-- ✅ **测试覆盖率保持**：所有优化保持 100% 测试通过率 (64/64)
-- 🔧 **类型检查通过**：所有 TypeScript 类型错误修复
-- 📋 **代码审查文档**：新增 `CODE_REVIEW_OPTIMIZATIONS.md` 详细文档
+### 🧪 Tests
+- ✅ **Test Coverage Maintenance**: All optimizations maintain 100% test pass rate (64/64)
+- 🔧 **Type Check Pass**: All TypeScript type errors fixed
+- 📋 **Code Review Documentation**: New `CODE_REVIEW_OPTIMIZATIONS.md` detailed documentation
 
-### 📊 性能指标 / Performance Metrics
-- **内存使用**: 减少约 15%
-- **错误处理速度**: 提升约 40%  
-- **代码体积**: 减少约 8%
-- **重复代码**: 减少约 60%
-- **类型安全覆盖率**: 提升至 85%
+### 📊 Performance Metrics
+- **Memory Usage**: Reduced by approximately 15%
+- **Error Handling Speed**: Improved by approximately 40%
+- **Code Size**: Reduced by approximately 8%
+- **Duplicate Code**: Reduced by approximately 60%
+- **Type Safety Coverage**: Increased to 85%
 
-### 🔧 技术债务清理 / Technical Debt
-- 重构了大量重复代码
-- 优化了全局资源管理
-- 改善了错误处理架构
-- 提升了类型安全性
-- 增强了跨环境兼容性
+### 🔧 Technical Debt Cleanup
+- Refactored large amounts of duplicate code
+- Optimized global resource management
+- Improved error handling architecture
+- Enhanced type safety
+- Strengthened cross-environment compatibility
 
-### 📋 代码审查总结 / Code Review Summary
-这个版本是基于全面代码审查的优化版本，解决了 **7 个主要问题领域**：
-1. 性能相关优化（内存管理、缓存策略）
-2. 代码复用优化（减少重复逻辑）  
-3. 类型安全性优化（严格类型守卫）
-4. 缓存策略优化（LRU + TTL 算法）
-5. 错误处理优化（分类和智能重试）
-6. 模块导出优化（清晰的 API 结构）
-7. Performance API 兼容性优化（跨环境支持）
+### 📋 Code Review Summary
+This version is an optimization release based on comprehensive code review, addressing **7 major problem areas**:
+1. Performance-related optimizations (memory management, cache strategy)
+2. Code reuse optimization (reducing duplicate logic)
+3. Type safety optimization (strict type guards)
+4. Cache strategy optimization (LRU + TTL algorithm)
+5. Error handling optimization (classification and smart retry)
+6. Module export optimization (clear API structure)
+7. Performance API compatibility optimization (cross-environment support)
 
-所有优化都经过测试验证，保持 100% 向后兼容性。
+All optimizations have been tested and verified, maintaining 100% backward compatibility.
 
 ## [0.0.2] - 2024-12-29
 
-### 新增 / Added
-- 🌍 环境检测功能：新增 `isDevelopment()` 函数，支持多种开发环境检测
-- 🚨 错误日志函数：新增 `error()` 函数，用于错误信息的格式化输出
-- 📝 日志环境控制：所有日志输出函数（`log`、`warn`、`error`）现在只在开发环境下输出
+### Added
+- 🌍 Environment detection functionality: New `isDevelopment()` function supporting multiple development environment detection
+- 🚨 Error logging function: New `error()` function for formatted error message output
+- 📝 Log environment control: All logging functions (`log`, `warn`, `error`) now only output in development environment
 
-### 改进 / Changed
-- ♻️ 重构日志系统：统一了所有日志函数的样式和行为
-- 🎨 优化日志样式：为不同类型的日志使用不同的颜色渐变背景
-- 📦 更新导出：在主入口文件中导出了新的工具函数
+### Changed
+- ♻️ Refactored logging system: Unified styling and behavior of all logging functions
+- 🎨 Optimized log styling: Different color gradient backgrounds for different types of logs
+- 📦 Updated exports: New utility functions exported in main entry file
 
-### 修复 / Fixed
-- 🐛 修复了变量名冲突问题：将组件中的 `error` ref 重命名为 `errorState`
-- 🧪 修复了单元测试：解决了环境变量相关的测试失败问题
-- 🔧 修复了构建问题：确保所有 TypeScript 类型正确
+### Fixed
+- 🐛 Fixed variable name conflicts: Renamed `error` ref in component to `errorState`
+- 🧪 Fixed unit tests: Resolved environment variable related test failures
+- 🔧 Fixed build issues: Ensured all TypeScript types are correct
 
-### 测试 / Tests
-- ✅ 新增了 `error` 函数的单元测试
-- 🔄 改进了环境变量相关的测试策略
-- 📊 测试覆盖率保持在高水平
+### Tests
+- ✅ Added unit tests for `error` function
+- 🔄 Improved test strategy for environment variables
+- 📊 Maintained high test coverage levels
 
 ## [0.0.1] - 2024-12-01
 
-### 新增 / Added
-- 🎉 初始版本发布
-- 🧩 核心组件 `EwVueComponent`：支持动态组件渲染
-- 🔌 Vue 插件支持：可通过插件方式全局安装
-- 🔄 重试机制：组件加载失败时自动重试
-- ⚡ 性能优化：内置缓存机制和懒加载支持
-- 🚨 错误处理：完整的错误捕获和处理机制
-- 📝 日志系统：开发环境下的详细日志输出
-- 🧪 完整测试：包含单元测试和集成测试
-- 📚 文档站点：完整的中英文文档
-- 🎮 在线演练场：支持在线体验和测试
+### Added
+- 🎉 Initial version release
+- 🧩 Core component `EwVueComponent`: Supports dynamic component rendering
+- 🔌 Vue plugin support: Can be installed globally via plugin
+- 🔄 Retry mechanism: Automatic retry when component loading fails
 
-### 核心特性 / Core Features
-- **动态组件渲染**：支持异步组件和同步组件的动态加载
-- **错误边界**：自动捕获组件错误并提供降级处理
-- **性能监控**：内置性能监控和报告功能
-- **插件系统**：支持自定义插件扩展功能
-- **TypeScript 支持**：完整的 TypeScript 类型定义
-- **Vue 3 兼容**：专为 Vue 3 设计和优化
+### Core Features
+- **Dynamic Component Rendering**: Supports dynamic loading of both asynchronous and synchronous components
+- **Error Boundaries**: Automatically captures component errors and provides fallback handling
+- **Performance Monitoring**: Built-in performance monitoring and reporting functionality
+- **Plugin System**: Supports custom plugin extension functionality
+- **TypeScript Support**: Complete TypeScript type definitions
+- **Vue 3 Compatibility**: Designed and optimized for Vue 3
 
 ---
 
-## 图例 / Legend
+## Legend
 
-- 🎉 重大发布 / Major Release
-- ✨ 新功能 / New Feature  
-- 🐛 Bug 修复 / Bug Fix
-- ♻️ 重构 / Refactor
-- 📝 文档 / Documentation
-- 🧪 测试 / Tests
-- ⚡ 性能 / Performance
-- 🔒 安全 / Security
-- 🎨 样式 / Style
-- 🔧 工具 / Tools 
+- 🎉 Major Release
+- ✨ New Feature  
+- 🐛 Bug Fix
+- ♻️ Refactor
+- 📝 Documentation
+- 🧪 Tests
+- ⚡ Performance
+- 🔒 Security
+- �� Style
+- 🔧 Tools 

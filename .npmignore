@@ -6,6 +6,7 @@ tests/
 tsconfig.json
 rollup.config.js
 vitest.config.ts
+postcss.config.js
 .gitignore
 
 # Development files
@@ -36,6 +37,7 @@ docs/
 
 # Development analysis files
 vue-component-analysis.md
+CODE_REVIEW_OPTIMIZATIONS.md
 
 # IDE files
 .vscode/
@@ -62,3 +64,19 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# Build artifacts (keep only final dist)
+dist/temp.js
+
+# Playground (development environment)
+playground/
+
+# Test files
+tests/
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+
+# Development scripts
+deploy-all.sh

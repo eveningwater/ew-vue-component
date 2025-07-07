@@ -13,12 +13,23 @@ import type {
   ErrorHandlerOptions
 } from './types'
 
-// 环境检测函数
+// 环境检测函数 - 类似 Vue 框架的实现方式
+// 构建时会通过 Rollup 的 replace 插件注入 __EW_DEV__ 变量
+declare const __EW_DEV__: boolean
+
 export const isDevelopment = (): boolean => {
-  return process.env.NODE_ENV === 'development' || 
-         process.env.NODE_ENV === 'dev' ||
-         !process.env.NODE_ENV ||
-         (typeof window !== 'undefined' && (window as any).__VUE_DEVTOOLS_GLOBAL_HOOK__)
+  // 优先使用构建时注入的 __EW_DEV__ 变量
+  if (typeof __EW_DEV__ !== 'undefined') {
+    return __EW_DEV__
+  }
+  
+  // 降级检测：检查 Vue DevTools 是否存在（仅在浏览器环境）
+  if (typeof window !== 'undefined' && (window as any).__VUE_DEVTOOLS_GLOBAL_HOOK__) {
+    return true
+  }
+  
+  // 默认返回 false（生产环境）
+  return false
 }
 
 // 基础工具函数
