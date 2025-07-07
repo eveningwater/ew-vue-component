@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createApp, defineComponent, h, nextTick } from 'vue'
-import plugin, { EwVueComponent } from '../src/index'
+import plugin, { EwVueComponent } from '../src'
 
 describe('集成测试', () => {
   it('应该在实际应用中使用插件', () => {

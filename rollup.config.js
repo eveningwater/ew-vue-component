@@ -2,6 +2,7 @@ const typescript = require('@rollup/plugin-typescript');
 const json = require('@rollup/plugin-json');
 const postcss = require('rollup-plugin-postcss');
 const replace = require('@rollup/plugin-replace');
+const dts = require('rollup-plugin-dts').default;
 const { writeFileSync } = require('fs');
 
 const banner = `/**
@@ -194,6 +195,37 @@ module.exports = [
           if (fs.existsSync(tempFile)) {
             fs.unlinkSync(tempFile);
           }
+        }
+      }
+    ]
+  },
+  // 类型声明文件
+  {
+    input: 'src/index.ts',
+    output: { file: 'dist/ew-vue-component.d.ts', format: 'es' },
+    external: ['vue'],
+    plugins: [
+      dts({
+        respectExternal: true,
+        compilerOptions: {
+          baseUrl: '.',
+          paths: {
+            '@/*': ['src/*']
+          }
+        }
+      }),
+      {
+        name: 'clean-extra-dts',
+        buildEnd() {
+          const fs = require('fs');
+          const path = require('path');
+          const distDir = path.join(__dirname, 'dist');
+          const keep = ['ew-vue-component.d.ts', 'ew-vue-component.d.ts.map'];
+          fs.readdirSync(distDir).forEach(file => {
+            if ((file.endsWith('.d.ts') || file.endsWith('.d.ts.map')) && !keep.includes(file)) {
+              fs.unlinkSync(path.join(distDir, file));
+            }
+          });
         }
       }
     ]
