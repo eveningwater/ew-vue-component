@@ -209,7 +209,7 @@ const initializeStore = async () => {
         imports: {
           ...builtinImportMap.value.imports,
           'vue': 'https://unpkg.com/vue@3/dist/vue.esm-browser.js',
-          'ew-vue-component': 'https://unpkg.com/ew-vue-component@0.0.2-beta.5/dist/index.esm.js'
+          'ew-vue-component': 'https://unpkg.com/ew-vue-component@0.0.2-beta.6/dist/ew-vue-component.esm.js'
         }
       })
     }
