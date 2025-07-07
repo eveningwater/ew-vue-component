@@ -62,7 +62,7 @@ const handleRetry = () => {
 
 <style>
 /* 导入组件样式 */
-@import url('https://unpkg.com/ew-vue-component@0.0.2-beta.5/dist/ew-vue-component.css');
+@import url('https://unpkg.com/ew-vue-component@0.0.2-beta.7/dist/ew-vue-component.css');
 </style>
 
 <style scoped>
