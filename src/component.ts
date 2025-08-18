@@ -8,8 +8,8 @@ import {
   onMounted,
   onUnmounted
 } from "vue";
-import { isString, warn, log, error, createCache, createPluginManager, createPerformanceMonitor, handleComponentError, logPlugin, performancePlugin, errorPlugin, isAsyncComponent, isDevelopment } from "./utils";
-import type { VNode } from 'vue'
+import { isString, warn, log, error, createCache, createPluginManager, createPerformanceMonitor, handleComponentError, logPlugin, performancePlugin, errorPlugin, isAsyncComponent } from "./utils";
+import type { PropType, VNode } from 'vue'
 import type { 
   EwVueComponentProps, 
   ComponentType,
@@ -57,22 +57,22 @@ export default defineComponent({
   name: "EwVueComponent",
   props: {
     is: {
-      type: [String, Object, Function] as any,
+      type: [String, Object, Function] as PropType<ComponentType>,
       required: true,
-      validator: (value: any) => {
+      validator: (value) => {
         if (!value) {
-          warn('组件不能为空')
+          warn('Component cannot be empty!');
           return false
         }
         return true
       }
     },
     fallback: {
-      type: [String, Object, Function] as any,
+      type: [String, Object, Function] as PropType<ComponentType>,
       default: null
     },
     errorComponent: {
-      type: [String, Object, Function] as any,
+      type: [String, Object, Function] as PropType<ComponentType>,
       default: null
     },
     cache: {
@@ -93,7 +93,7 @@ export default defineComponent({
     }
   },
   emits: {
-    error: (error: Error) => true
+    error: (_err: Error) => true
   },
   setup(props: EwVueComponentProps, { emit, slots, attrs }) {
     const currentComponent = ref<Component | null>(null)
