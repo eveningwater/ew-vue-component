@@ -4,6 +4,7 @@ import * as plugin from './plugin'
 import type * as types from './types'
 // 从 package.json 导入版本号
 import packageInfo from '../package.json'
+import { App } from 'vue'
 
 // 主组件
 export { EwVueComponent }
@@ -45,13 +46,13 @@ export {
 export default EwVueComponent
 
 // 插件安装函数（Vue 插件标准）
-export const install = (app: any, options?: any) => {
+export const install = (app: App, options?: { globalPlugins?: plugin.Plugin[], [key: string]: any }) => {
   app.component('EwVueComponent', EwVueComponent)
   
   // 可选的全局配置
   if (options?.globalPlugins) {
     const pluginManager = plugin.getPluginManager()
-    options.globalPlugins.forEach((p: any) => {
+    options.globalPlugins.forEach((p: plugin.Plugin) => {
       pluginManager.register(p.name, p)
     })
   }

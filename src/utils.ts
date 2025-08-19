@@ -319,7 +319,7 @@ export const createPluginManager = (): PluginManager => {
     },
 
     create(config: Record<string, any>) {
-      return Object.entries(config).map(([name, options]) => {
+      return Object.entries(config).map(([name]) => {
         const plugin = plugins.get(name)
         if (!plugin) {
           throw new Error(`Plugin "${name}" not found`)

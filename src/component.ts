@@ -192,7 +192,7 @@ export default defineComponent({
     }
 
     // 公共的组件加载后置处理
-    const afterLoadComponent = (component: any, resolvedComponent: Component, cacheKey: string) => {
+    const afterLoadComponent = (_component: any, resolvedComponent: Component, cacheKey: string) => {
       // 结束性能监控
       globalPerformanceMonitor.end(`load-${cacheKey}`)
 
@@ -320,7 +320,7 @@ export default defineComponent({
       // 显示加载状态
       if (isLoading.value) {
         if (props.fallback) {
-          return h(props.fallback as any, attrs, slots)
+          return h(props.fallback, attrs, slots)
         }
         return h('div', { class: 'ew-vue-component-loading' }, '加载中...')
       }
@@ -328,7 +328,7 @@ export default defineComponent({
       // 显示错误状态
       if (errorState.value) {
         if (props.errorComponent) {
-          return h(props.errorComponent as any, { 
+          return h(props.errorComponent, { 
             error: errorState.value,
             retry: () => loadComponent(props.is)
           }, slots)
@@ -350,11 +350,11 @@ export default defineComponent({
       // 渲染当前组件
       if (currentComponent.value) {
         // 排除内部props，只传递用户定义的props和attrs
-        const componentProps = { ...attrs }
+        type ComponentProps = Omit<EwVueComponentProps, 'is' | 'fallback' | 'errorComponent' | 'cache' | 'cacheKey' | 'cacheTtl' | 'plugins'>
+        const componentProps: ComponentProps = { ...attrs };
         for (const key in props) {
-          if (key !== 'is' && key !== 'fallback' && key !== 'errorComponent' && 
-              key !== 'cache' && key !== 'cacheKey' && key !== 'cacheTtl' && key !== 'plugins') {
-            componentProps[key] = (props as any)[key]
+          if (!['is', 'fallback', 'errorComponent', 'cache', 'cacheKey', 'cacheTtl', 'plugins'].includes(key)) {
+            componentProps[key as keyof ComponentProps] = props[key as keyof ComponentProps];
           }
         }
         
